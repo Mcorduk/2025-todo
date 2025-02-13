@@ -1,17 +1,17 @@
 import "./styles.css";
 
-function createTask(description) {
-    return {
-      description: description,
-      completed: false,
-      markCompleted() {
-        this.completed = true;
-      },
-      markIncomplete() {
-        this.completed = false;
-      },
-    };
-  }
+
+// Add tasks to todo list
+// delete indiv or all tasks
+
+const TODO = [];
+
+
+
+let task1 = new Task("Study", "All day study yee-haw", "progressing", "extreme")
+
+
+  /*
   
 function createTodoList() {
     const tasks = [];
@@ -46,3 +46,4 @@ function displayTasks() {
 todoList.getTasks()[0].markCompleted();
 
 displayTasks();
+*/

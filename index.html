@@ -3,9 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
-    
+    <div id="app">
+        <nav>
+            <div id="leftHeader">
+                <div id="sidenav">
+                </div>
+                <div id="todoHeader">
+                </div>
+                <div id="currentDate">
+                </div>
+            </div>
+
+            <div id="rightHeader">
+                <div></div>
+                <div id="todoTaskStatuses">
+                    <div id="completedTasks"></div>
+                    <div id="incompleteTasks"></div>
+                </div>
+                <div id="completionPercentage"></div>
+            </div>
+        </nav>
+
+        <section>
+            <div id="taskList">
+                <div class="task">
+                    <div id="taskIcon"></div>
+                    <div id="taskText">
+                        <div id="taskHeader"></div>
+                        <div id="taskDescription"></div>
+                    </div>
+                    <div id="taskTime"></div>
+                </div>
+            </div>
+            
+            <div id="taskListFooter">
+                <div id="completedTaskCount"></div>
+                <div id="addNewTask"></div>
+            </div>
+        </section>
+        <footer></footer>
+    </div>
 </body>
 </html>
