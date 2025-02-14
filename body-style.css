@@ -21,7 +21,7 @@
     }
 
     #taskText {
-        text-align: center;
+        text-align: left;
         display: flex;
         flex-direction: column;
         justify-content: center;
