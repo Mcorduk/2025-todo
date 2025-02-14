@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Material Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,calculate" />
     <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="common-style.css">
+    <link rel="stylesheet" href="nav-style.css">
+    <link rel="stylesheet" href="body-style.css">
     <link rel="stylesheet" href="hamburger.css">
     <title>Todo List</title>
   
@@ -25,30 +29,53 @@
             </div>
 
             <div id="rightHeader">
-                <div></div>
-                <div id="todoTaskStatuses">
-                    <div id="completedTasks"></div>
-                    <div id="incompleteTasks"></div>
+                <div class="flex-1"></div>
+                <div id="todoTaskStatuses" class="flex-1">
+                    <div id="completedTasks" class="flex-1">
+                        <div class="number montserrat">24</div>
+                        <div class="open-sans gray">Done</div>
+                    </div>
+                    <div id="incompleteTasks" class="flex-1">
+                        <div class="number montserrat">16</div>
+                        <div class="open-sans gray">Active</div>
+                    </div>
                 </div>
-                <div id="completionPercentage"></div>
+                <div id="completionPercentage"class="flex-1">
+                    <p class="gray">65% done</p>
+                </div>
             </div>
         </nav>
 
         <section>
             <div id="taskList">
                 <div class="task">
-                    <div id="taskIcon"></div>
-                    <div id="taskText">
-                        <div id="taskHeader"></div>
-                        <div id="taskDescription"></div>
+                    <div class="flex">
+                        <div id="taskIcon">
+                            <span class="material-symbols-sharp blue-icon">
+                                calculate
+                                </span>                        </div>
+                        <div id="taskText">
+                            <div id="taskHeader" class="dark-slate montserrat">Doing Leetcode</div>
+                            <div id="taskDescription" class="dark-gray open-sans">Study Data Structures</div>
+                        </div>
                     </div>
-                    <div id="taskTime"></div>
+                    <div id="taskTime" class="dark-gray montserrat">9am</div>
                 </div>
+                <hr>
+
             </div>
 
             <div id="taskListFooter">
-                <div id="completedTaskCount"></div>
-                <div id="addNewTask"></div>
+                <div id="completedTaskCount">
+                    <p class="open-sans dark-gray">COMPLETED <span>5</span></p> 
+                </div>
+                <div>
+                    <button id="showTodoForm">
+                        <span class="material-symbols-sharp">
+                            add
+                        </span>                    
+                    </button>
+                </div>
             </div>
         </section>
         <footer></footer>
