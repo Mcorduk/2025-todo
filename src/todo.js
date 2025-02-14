@@ -1,18 +1,10 @@
-import "./styles.css";
+// TODO: Enable a seperate Todo List
+// User can add or delete Todo List Separate from the default one
+// User can navigate to Todo's from sidebar
+// Each Todo has it's own tasks
+// Each Todo Has it's own completed tasks
 
-
-// Add tasks to todo list
-// delete indiv or all tasks
-
-const TODO = [];
-
-
-
-let task1 = new Task("Study", "All day study yee-haw", "progressing", "extreme")
-
-
-  /*
-  
+/*  
 function createTodoList() {
     const tasks = [];
   
