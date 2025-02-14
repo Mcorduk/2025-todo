@@ -9,23 +9,6 @@ body {
     height: 100vh;
   }
 
-  .montserrat {
-    font-family: "Montserrat", serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal;
-  }
-
-  
-  .open-sans {
-    font-family: "Open Sans", serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-variation-settings:
-      "wdth" 100;
-  }
-
   #app {
     min-width: 400px;
     max-width: 60%;
@@ -40,14 +23,13 @@ body {
     display: flex;
     flex-direction: row;
     width: 100%;
-    padding: 20px;
   }
 
   #leftHeader{
+    padding: 20px;
+
     max-width: 60%;
   }
-
-
 
   #todoHeader{
     color: white;
@@ -62,3 +44,40 @@ body {
     color: lightgray;
     font-size: 0.85rem;
   }
+
+  #rightHeader {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    padding: 20px;
+
+    /* css glass effect */
+    background: rgba(73, 56, 137, 0.26);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+
+    #todoTaskStatuses {
+      display: flex;
+
+      #completedTasks, #incompleteTasks {
+        text-align: right;
+      }
+
+      #completedTasks .number, #incompleteTasks .number {
+        font-size: 1.6rem;
+        color: white;
+        font-weight: 500;
+      }
+
+      #completedTasks {
+        padding-right: 20px;
+      }
+    }
+
+    #completionPercentage p{
+      text-align: center;
+    }
+  }
+
+  
