@@ -4,6 +4,15 @@
 // Each Todo has it's own tasks
 // Each Todo Has it's own completed tasks
 
+class Todo {
+  constructor(name) {
+    this._name = name;
+  }
+
+  get name(){ return this._name}
+}
+
+export { Todo };
 /*  
 function createTodoList() {
     const tasks = [];
