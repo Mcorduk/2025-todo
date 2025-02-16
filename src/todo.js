@@ -7,9 +7,37 @@
 class Todo {
   constructor(name) {
     this._name = name;
+    this.tasks = [];
+    this.completedTasks = [];
   }
 
-  get name(){ return this._name}
+  get name() {
+    return this._name;
+  }
+
+  addTask(description) {
+  }
+
+  deleteTask(index) {
+    if (index > -1 && index < this.tasks.length) {
+      this.tasks.splice(index, 1);
+    }
+  }
+
+  markTaskCompleted(index) {
+
+  }
+
+  getTasks(includeCompleted = false) {
+    if (includeCompleted) {
+      return this.tasks.concat(this.completedTasks);
+    }
+    return this.tasks;
+  }
+
+  getCompletedTasks() {
+    return this.completedTasks;
+  }
 }
 
 export { Todo };
