@@ -4,14 +4,15 @@ import "../css/common-style.css";
 import "../css/body-style.css";
 import "../css/nav-style.css";
 import "../css/add-task-dialog.css";
+import "../css/icon-select-dialog.css";
 import "../css/hamburger.css";
 import "../css/reset.css";
 
 import { Todo } from "./todo";
 import { Task } from "./task";
 import { DisplayController } from "./displayController";
+import { TaskController } from "./taskController";
 
-const displayController = new DisplayController()
 
 let todoList = [];
 let todo1 = new Todo("Test Todo 1");
@@ -36,7 +37,8 @@ todo2.addTask(task4)
 todoList.push(todo2)
 console.log(todoList)
 
-displayController.renderNav();
+const displayController = new DisplayController();
+const taskController = new TaskController();
 
 // make hamburger button active
 const button = document.querySelector('.hamb')
