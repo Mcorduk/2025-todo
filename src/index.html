@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google Material Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,calculate,code,west" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,alarm,bookmark,calculate,check,code,delete,edit,group,home,mail,phone,settings,star,task,west">
 
     <title>Todo List</title>
   
@@ -99,6 +99,11 @@
         </div>
         <div class="dialog-body open-sans">
             <form>
+                <div id="taskIcon">
+                    <span class="material-symbols-sharp blue-icon">
+                        calculate
+                    </span>
+                </div>
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" id="title" name="title" placeholder="Enter title">
@@ -123,8 +128,5 @@
         </div>
     </div>
 </body>
-<script>
-    const button = document.querySelector('.hamb')
-    button.addEventListener('click',()=>{button.classList.toggle('active')})
-</script>
+
 </html>

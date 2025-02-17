@@ -37,3 +37,7 @@ todoList.push(todo2)
 console.log(todoList)
 
 displayController.renderNav();
+
+// make hamburger button active
+const button = document.querySelector('.hamb')
+button.addEventListener('click',()=>{button.classList.toggle('active')})
