@@ -2,11 +2,15 @@
 
 import { Todo } from './todo';
 import { format } from 'date-fns'
+import { MATERIAL_ICONS } from './constants';
 
 class DisplayController {
     constructor() {
         this._todoList = [];
         this._currentTodo = new Todo("Your Things");
+
+        this.renderNav();
+        this.renderIconSelect();
     }
 
     get todoList() { return this._todoList; }
@@ -64,6 +68,19 @@ class DisplayController {
     renderTodo() {
    
     }
+
+    renderIconSelect() {
+        let div = document.getElementById("iconSelection");
+
+        for (let icon of MATERIAL_ICONS) {
+            const iconHtml = `<div class="task-icon">
+                                <span class="material-symbols-sharp blue-icon icon-selection">${icon}</span>
+                            </div>`;
+            
+            div.innerHTML += iconHtml;
+        }
+    }
+
   }
 
   export { DisplayController };
