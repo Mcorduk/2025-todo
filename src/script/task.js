@@ -1,3 +1,5 @@
+"use strict";
+
 import { TASK_STATUS, TASK_PRIORITY } from "./constants";
 
 class Task {
@@ -5,7 +7,8 @@ class Task {
     static STATUSES = TASK_STATUS;
     static PRIORITIES = TASK_PRIORITY;
 
-    constructor(name, description, time, date, status = TASK_STATUS.INCOMPLETE, priority = TASK_PRIORITY.LOW) {
+    constructor(icon, name, description, time, date, status = TASK_STATUS.INCOMPLETE, priority = TASK_PRIORITY.LOW) {
+      this._icon = icon;
       this._name = name;
       this._description = description;
       this._time = time;

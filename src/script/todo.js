@@ -1,3 +1,5 @@
+"use strict";
+
 import { TASK_PROPERTY, TASK_STATUS, TASK_PRIORITY } from "./constants";
 
 // TODO: Enable a seperate Todo List
