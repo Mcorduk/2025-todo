@@ -1,6 +1,6 @@
 
   nav{
-    background-image: url("./blue-mountain.jpg");
+    background-image: url("../image/blue-mountain.jpg");
     background-size: cover;
     min-height: 200px;
     display: flex;

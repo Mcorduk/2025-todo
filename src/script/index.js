@@ -1,9 +1,9 @@
-import "./common-style.css";
-import "./body-style.css";
-import "./nav-style.css";
-import "./add-task-dialog.css";
-import "./hamburger.css";
-import "./reset.css";
+import "../css/common-style.css";
+import "../css/body-style.css";
+import "../css/nav-style.css";
+import "../css/add-task-dialog.css";
+import "../css/hamburger.css";
+import "../css/reset.css";
 
 import { Todo } from "./todo";
 import { Task } from "./task";
