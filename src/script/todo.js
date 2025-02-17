@@ -1,3 +1,5 @@
+import { TASK_PROPERTY, TASK_STATUS, TASK_PRIORITY } from "./constants";
+
 // TODO: Enable a seperate Todo List
 // User can add or delete Todo List Separate from the default one
 // User can navigate to Todo's from sidebar
@@ -7,38 +9,67 @@
 class Todo {
   constructor(name) {
     this._name = name;
-    this.tasks = [];
-    this.completedTasks = [];
+    this._tasks = [];
   }
 
   get name() {
     return this._name;
   }
+  get tasks() {
+    return this._tasks;
+  }
 
-  addTask(description) {
+  addTask(task) {
+    return this._tasks.push(task);
   }
 
   deleteTask(index) {
-    if (index > -1 && index < this.tasks.length) {
-      this.tasks.splice(index, 1);
+    if (index > -1 && index < this._tasks.length) {
+      this._tasks.splice(index, 1);
     }
   }
 
-  markTaskCompleted(index) {
-
-  }
-
-  getTasks(includeCompleted = false) {
-    if (includeCompleted) {
-      return this.tasks.concat(this.completedTasks);
+  toggleTaskStatus(index) {
+    let task = this.getTask(index); 
+    if(task.status === TASK_STATUS.INCOMPLETE) {
+      task.status = "complete";
+    } else if(task.status === TASK_STATUS.COMPLETE) {
+      task.status = "incomplete";
     }
-    return this.tasks;
   }
 
-  getCompletedTasks() {
-    return this.completedTasks;
+  toggleTaskPriority(index) {
+    let task = this.getTask(index); 
+    
+    const priorities = Object.values(TASK_PRIORITY)
+    let priorityIndex = priorities.indexOf(task.priority)
+
+    task.priority = priorities[priorityIndex + 1]
+  }
+
+  getTaskCount(property = TASK_PROPERTY.STATUS, value = TASK_STATUS.INCOMPLETE) {
+    let count = 0;
+
+    for (let task of this._tasks) {
+      const PROPERTIES = Object.values(TASK_PROPERTY);
+      
+      if (!PROPERTIES.includes(property)) {
+        throw new Error("Unidentified property")
+      }
+
+      if (task[property] === value){
+        count++;
+      } 
+    }
+
+    return count;
+  }
+
+  getTask(index) {
+    return this._tasks[index]; 
   }
 }
+
 
 export { Todo };
 /*  
