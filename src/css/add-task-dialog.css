@@ -5,7 +5,7 @@ body {
 }
 
 
-#addTaskDialog {
+#addTaskDialog > div{
     display: flex;
     flex-direction: column;
     min-width: 400px;
@@ -36,9 +36,56 @@ body {
         margin-left: -36px;
     }
 }
+
 .dialog-body {
-    padding: 15px;
+    padding: 0 15px 15px 15px;
+
+    .task-icon {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .task-icon:hover .blue-icon {
+        opacity: 0.5;
+    }
+
+    .task-icon .blue-icon {
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        background: white;
+        font-size: 48px;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        transition: opacity 0.3s ease;
+    }
+
+    .task-icon .change-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        background: white;
+        font-size: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+    }
+
+    .task-icon:hover .change-icon {
+        display: flex;
+    }
 }
+
 
 .form-group {
     margin-bottom: 15px;

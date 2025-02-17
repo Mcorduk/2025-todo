@@ -82,7 +82,7 @@
                 <p class="open-sans dark-gray">COMPLETED <span>5</span></p> 
             </div>
             <div>
-                <button id="showTodoForm">
+                <button id="showAddTaskDialog">
                     <span class="material-symbols-sharp">
                         add
                     </span>                    
@@ -90,43 +90,53 @@
             </div>
         </footer>
     </div>
-    <div id="addTaskDialog">
-        <div class="dialog-header">
-            <span class="material-symbols-sharp">
-                west
-                </span>
-            <h2 class="montserrat flex-1">Add a New Task</h2>
-        </div>
-        <div class="dialog-body open-sans">
-            <form>
-                <div id="taskIcon">
-                    <span class="material-symbols-sharp blue-icon">
-                        calculate
+    <dialog id="addTaskDialog">
+        <div>
+            <div class="dialog-header">
+                <span class="material-symbols-sharp">
+                    west
                     </span>
-                </div>
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" id="title" name="title" placeholder="Enter title">
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea id="description" name="description" placeholder="Enter description"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="time">Time</label>
-                    <input type="time" id="time" name="time">
-                </div>
-                <div class="form-group">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" name="date">
-                </div>
-            </form>
+                <h2 class="montserrat flex-1">Add a New Task</h2>
+            </div>
+            <div class="dialog-body open-sans">
+                <form>
+                    <div class="task-icon">
+                        <span id="showTaskIconList" class="material-symbols-sharp blue-icon">
+                            add
+                        </span>
+                        <span class="material-symbols-sharp change-icon" id="changeIcon" style="display:none">add</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" placeholder="Enter title">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" placeholder="Enter description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Time</label>
+                        <input type="time" id="time" name="time">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date">
+                    </div>
+                </form>
+            </div>
+            <div class="dialog-footer open-sans">
+                <button id="closeAddTaskDialog" class="cancel-btn">Cancel</button>
+                <button id="sendTaskForm" class="save-btn">Save</button>
+            </div>
         </div>
-        <div class="dialog-footer open-sans">
-            <button class="cancel-btn">Cancel</button>
-            <button class="save-btn">Save</button>
+    </dialog>
+    <dialog id="iconDialog" >
+        <div class="dialog">
+            <div id="iconSelection" >
+
+            </div>
         </div>
-    </div>
+    </dialog>
 </body>
 
 </html>
