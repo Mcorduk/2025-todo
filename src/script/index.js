@@ -12,13 +12,14 @@ import { Todo } from "./todo";
 import { Task } from "./task";
 import { DisplayController } from "./displayController";
 import { TaskController } from "./taskController";
+import { TASK_STATUS, TASK_PRIORITY } from "./constants";
 
 
 let todoList = [];
 let todo1 = new Todo("Test Todo 1");
 
-let task1 = new Task("Coding Todo App", "Code Vanilla JS Todo App",null, null, "progressing", "extreme")
-let task2 = new Task("Doing Leetcode", "Study Data Structures and Algorithms", null, null, "progressing", "medium")
+let task1 = new Task("code","Coding Todo App", "Code Vanilla JS Todo App","9am", null,  TASK_STATUS.INCOMPLETE, "extreme")
+let task2 = new Task("calculate", "Doing Leetcode", "Study Data Structures and Algorithms", "10am", null,  TASK_STATUS.INCOMPLETE, "medium")
 
 let todo2 = new Todo("Test Todo 2");
 
@@ -28,10 +29,10 @@ todo1.addTask(task2)
 todoList.push(todo1)
 
 console.log(todoList)
-let task3 = new Task("Brewing Coffee", "Just kidding im broke",null, null, "progressing", "extreme")
+let task3 = new Task("local_cafe","Brewing Coffee", "Just kidding im broke","11am", null,  TASK_STATUS.INCOMPLETE, "extreme")
 let task4 = new Task("Doing SQL", "I am too stupid even for SQL...", null, null, "progressing", "medium")
 
-todo2.addTask(task3);
+todo1.addTask(task3);
 todo2.addTask(task4)
 
 todoList.push(todo2)
@@ -39,6 +40,8 @@ console.log(todoList)
 
 const displayController = new DisplayController();
 const taskController = new TaskController();
+
+displayController.currentTodo = todo1
 
 // make hamburger button active
 const button = document.querySelector('.hamb')

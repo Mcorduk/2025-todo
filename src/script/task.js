@@ -8,6 +8,7 @@ class Task {
     static PRIORITIES = TASK_PRIORITY;
 
     constructor(icon, name, description, time, date, status = TASK_STATUS.INCOMPLETE, priority = TASK_PRIORITY.LOW) {
+      
       this._icon = icon;
       this._name = name;
       this._description = description;
@@ -16,14 +17,15 @@ class Task {
       this._status = status;
       this._priority = priority;
     }
+    get icon() { return this._icon; }
 
     get name() { return this._name; }
+
+    get description() { return this._description; }
 
     get time() { return this._time; }
 
     get date() { return this.date; }
-
-    get description() { return this._description; }
 
     get status() { return this._status; }
 
