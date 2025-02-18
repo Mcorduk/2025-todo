@@ -1,6 +1,7 @@
 "use strict";
 
 import { TASK_STATUS, TASK_PRIORITY } from "./constants";
+import { parse, format } from "date-fns";
 
 class Task {
 
@@ -30,6 +31,20 @@ class Task {
     get status() { return this._status; }
 
     get priority() { return this._priority; }
+
+    set icon(icon) { this._icon = icon; }
+    
+    set name(name) { this._name = name; }
+
+    set description(description) { this._description = description; }
+
+    set time(time) { 
+        const parsedTime = parse(time, "HH:mm", new Date());
+
+        this._time = format(parsedTime, "ha").toLowerCase();
+    }
+
+    set date(date) { this._date = date; }
 
     set status(newStatus) {
       const STATUSES = Object.values(TASK_STATUS)
