@@ -17,7 +17,7 @@ import { TASK_STATUS, TASK_PRIORITY } from "./constants";
 
 const todoController = new TodoController();
 const displayController = new DisplayController(todoController);
-const addTaskController = new AddTaskController(todoController);
+const addTaskController = new AddTaskController(todoController, displayController);
 
 
 // make hamburger button active

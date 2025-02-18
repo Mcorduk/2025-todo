@@ -1,10 +1,10 @@
 import { MATERIAL_ICONS } from "./constants";
 import { Task } from "./task";
-import { DisplayController } from "./displayController";
 
 class AddTaskController {
-    constructor(todoController){
+    constructor(todoController, displayController){
         this._todoController = todoController;
+        this._displayController = displayController;
         this._currentIcon = MATERIAL_ICONS[0];  
         this.iconDialog = document.getElementById("iconDialog");
         this.addTaskDialog = document.getElementById("addTaskDialog")
@@ -38,8 +38,8 @@ class AddTaskController {
             
             // get this added to current Todo's task list
             const currentTodo = this.todoController.currentTodo;
-            currentTodo.tasks.push(newTask);
-            DisplayController.renderTodo();
+            currentTodo.tasks = [...currentTodo.tasks,newTask];
+            this._displayController.renderTodo();
             this.addTaskDialog.close()
         })
     }
@@ -92,11 +92,16 @@ class AddTaskController {
 
         const task = new Task();
 
-        for(let [key, value] of formData) [
-            task[key] = value
-        ]
-
+        // Fetch icon
+        const icon = document.getElementById("showTaskIconList").textContent;
         
+        formData.append("icon", icon)
+
+        for(let [key, value] of formData.entries()) { 
+            task[key] = value
+        }
+
+        return task;
     }
 }
 
