@@ -16,9 +16,9 @@ class Todo {
 
   get name() { return this._name; }
 
-  get tasks() {
-    return this._tasks;
-  }
+  get tasks() { return this._tasks; }
+
+  set tasks(tasks) { this._tasks = tasks }
 
   addTask(task) {
     return this._tasks.push(task);
