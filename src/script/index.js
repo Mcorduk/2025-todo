@@ -11,38 +11,50 @@ import "../css/reset.css";
 import { Todo } from "./todo";
 import { Task } from "./task";
 import { DisplayController } from "./displayController";
-import { TaskController } from "./taskController";
+import { AddTaskController } from "./addTaskController";
 import { TASK_STATUS, TASK_PRIORITY } from "./constants";
 
 
 let todoList = [];
-let todo1 = new Todo("Test Todo 1");
 
-let task1 = new Task("code","Coding Todo App", "Code Vanilla JS Todo App","9am", null,  TASK_STATUS.INCOMPLETE, "extreme")
-let task2 = new Task("calculate", "Doing Leetcode", "Study Data Structures and Algorithms", "10am", null,  TASK_STATUS.INCOMPLETE, "medium")
+function genExample() {
+    let todo1 = new Todo("Test Todo 1");
 
-let todo2 = new Todo("Test Todo 2");
+    let task1 = new Task("code","Coding Todo App", "Code Vanilla JS Todo App","9am", null,  TASK_STATUS.INCOMPLETE, "extreme")
+    let task2 = new Task("calculate", "Doing Leetcode", "Study Data Structures and Algorithms", "10am", null,  TASK_STATUS.INCOMPLETE, "medium")
+    let task3 = new Task("local_cafe","Brewing Coffee", "Just kidding im broke","11am", null,  TASK_STATUS.COMPLETE, "extreme")
+    let task4 = new Task("Doing SQL", "I am too stupid even for SQL...", null, null, "progressing", "medium")
+    
+    let todo2 = new Todo("Test Todo 2");
+    
+    todo1.addTask(task1);
+    todo1.addTask(task2)
+    
+    todoList.push(todo1)
+    
+    // console.log(todoList)
+    
+    todo1.addTask(task3);
+    todo2.addTask(task4)
+    
+    todoList.push(todo2)
+    console.log(todoList)
+}
 
-todo1.addTask(task1);
-todo1.addTask(task2)
+genExample()
 
-todoList.push(todo1)
-
-console.log(todoList)
-let task3 = new Task("local_cafe","Brewing Coffee", "Just kidding im broke","11am", null,  TASK_STATUS.INCOMPLETE, "extreme")
-let task4 = new Task("Doing SQL", "I am too stupid even for SQL...", null, null, "progressing", "medium")
-
-todo1.addTask(task3);
-todo2.addTask(task4)
-
-todoList.push(todo2)
-console.log(todoList)
 
 const displayController = new DisplayController();
-const taskController = new TaskController();
+// Check local Storage for saved data
+// Create a default 
 
-displayController.currentTodo = todo1
+const addTaskController = new AddTaskController();
+
+displayController.currentTodo = todo1 // delete
+
 
 // make hamburger button active
+//
+//
 const button = document.querySelector('.hamb')
 button.addEventListener('click',()=>{button.classList.toggle('active')})

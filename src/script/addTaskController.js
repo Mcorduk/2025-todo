@@ -1,8 +1,8 @@
 import { MATERIAL_ICONS } from "./constants";
 
-class TaskController {
-    constructor(currentTodo){
-        this._currentTodo = currentTodo;
+class AddTaskController {
+    constructor(){
+        this._currentTodo;
         this._currentIcon = MATERIAL_ICONS[0];  
         this.iconDialog = document.getElementById("iconDialog");
         this.addTaskDialog = document.getElementById("addTaskDialog")
@@ -15,13 +15,28 @@ class TaskController {
     get currentIcon(){ this._currentIcon; }
 
     setEventListeners(){
-        document.getElementById("closeAddTaskDialog").addEventListener("click", () => this.iconDialog.close())
-        document.getElementById("showAddTaskDialog").addEventListener("click", () => this.showAddTaskDialog())
+        this.setTaskDialog()
         document.getElementById("sendTaskForm").addEventListener("click", () => this.sendTaskForm())
         
         document.getElementById("showTaskIconList").addEventListener("click", () => this.toggleIconList())
-        document.getElementById("iconDialog").addEventListener("click", (e) => this.selectIcon(e))
+        this.iconDialog.addEventListener("click", (e) => this.selectIcon(e))
 
+    }
+
+    setTaskDialog() {
+        document.getElementById("showAddTaskDialog").addEventListener("click", () => {
+            this.showAddTaskDialog()
+
+
+        })
+        document.getElementById("closeAddTaskDialog").addEventListener("click", () => this.addTaskDialog.close())
+
+        document.getElementById("addTaskForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            this.sendTaskForm();
+            // get this added to current Todo's task list
+            this.addTaskDialog.close()
+        })
     }
 
     showAddTaskDialog() {
@@ -40,11 +55,17 @@ class TaskController {
     }
 
     selectIcon(event){
+        if (event.targetid !== "iconDialog") {
+            this.iconDialog.close();
+        }
+
         if (event.target.tagName === "SPAN") {
             this._currentIcon = event.target.textContent;
             console.log("Selected Icon:", this._currentIcon);
             this.changeTaskIcon();
+            this.iconDialog.close();
         }
+        
     }
 
     changeTaskIcon(){
@@ -53,7 +74,11 @@ class TaskController {
         icon.textContent = this._currentIcon;
     }
 
-    sendTaskForm(){}
+    sendTaskForm(){
+        const form = document.getElementById("addTaskForm");
+        const formData = new FormData(form);
+        return formData;
+    }
 }
 
-export { TaskController };
+export { AddTaskController };
