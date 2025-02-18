@@ -90,8 +90,11 @@ class DisplayController {
         nav.innerHTML = navHtml;
     }
     renderBody() {
+    
 
         let taskList = document.getElementById("taskList");
+
+        taskList.innerHTML = "";
 
         let taskIndex = 0;
         for (let task of this.todoController.currentTodo.tasks )
