@@ -14,9 +14,8 @@ class Todo {
     this._tasks = [];
   }
 
-  get name() {
-    return this._name;
-  }
+  get name() { return this._name; }
+
   get tasks() {
     return this._tasks;
   }
