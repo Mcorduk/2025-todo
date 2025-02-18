@@ -6,14 +6,11 @@ import { MATERIAL_ICONS, TASK_STATUS } from './constants';
 
 class DisplayController {
     constructor() {
-        this._todoList = [];
         this._currentTodo = new Todo("Your Things");
 
         this.renderTodo()
     }
 
-    get todoList() { return this._todoList; }
-  
     get currentTodo() { return this._currentTodo; }
 
     set currentTodo(Todo) { 
@@ -30,7 +27,14 @@ class DisplayController {
         const ACTIVE_TASK_COUNT = currentTodo.getTaskCount("status", TASK_STATUS.INCOMPLETE);
         const COMPLETE_TASK_COUNT = currentTodo.getTaskCount("status", TASK_STATUS.COMPLETE);
         const TOTAL_TASK_COUNT  = ACTIVE_TASK_COUNT + COMPLETE_TASK_COUNT;
-        const COMPLETION_PERCENTAGE = Math.round((COMPLETE_TASK_COUNT/TOTAL_TASK_COUNT)*100)
+        let completionPercentageText;
+         if(TOTAL_TASK_COUNT > 0) {
+            let completionPercentage = Math.round((COMPLETE_TASK_COUNT/TOTAL_TASK_COUNT)*100)
+            completionPercentageText = completionPercentage + "% done"
+
+         } else { // Maybe change this to "Get started" and on click add new Dialog box opens
+            completionPercentageText = "No tasks yet"
+         }
     
         const today = format(new Date(), 'MMM d, yyyy')
 
@@ -60,7 +64,7 @@ class DisplayController {
                     </div>
                 </div>
                 <div id="completionPercentage"class="flex-1">
-                    <p class="gray">${COMPLETION_PERCENTAGE}% done</p>
+                    <p class="gray">${completionPercentageText}</p>
                 </div>
             </div>
         `
