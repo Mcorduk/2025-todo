@@ -5,28 +5,43 @@ import { format } from 'date-fns'
 import { MATERIAL_ICONS, TASK_STATUS } from './constants';
 
 class DisplayController {
-    constructor() {
-        this._currentTodo = new Todo("Your Things");
+    constructor(todoController) {
+        this._todoController = todoController;
 
         this.renderTodo()
     }
 
-    get currentTodo() { return this._currentTodo; }
+        get todoController() { return this._todoController }
 
-    set currentTodo(Todo) { 
-        this._currentTodo = Todo
-        this.renderTodo()
+    // get currentTodo() { return this._currentTodo; }
+
+    // get currentTodoIndex() { return this._currentTodoIndex; }
+
+    // set currentTodo(Todo) { 
+    //     this._currentTodo = Todo
+    //     this.renderTodo()
+    // }
+
+    // set currentTodoIndex(currentTodoIndex) {this._currentTodoIndex = currentTodoIndex; }
+
+    renderTodo() {
+
+        this.renderNav();
+        this.renderBody();
+        this.renderFooter();
+        this.renderIconSelect();
     }
 
     renderNav(){
 
-        const currentTodo = this.currentTodo;
+        const currentTodo = this.todoController.currentTodo;
 
         const TITLE = currentTodo.name;
         
         const ACTIVE_TASK_COUNT = currentTodo.getTaskCount("status", TASK_STATUS.INCOMPLETE);
         const COMPLETE_TASK_COUNT = currentTodo.getTaskCount("status", TASK_STATUS.COMPLETE);
         const TOTAL_TASK_COUNT  = ACTIVE_TASK_COUNT + COMPLETE_TASK_COUNT;
+
         let completionPercentageText;
          if(TOTAL_TASK_COUNT > 0) {
             let completionPercentage = Math.round((COMPLETE_TASK_COUNT/TOTAL_TASK_COUNT)*100)
@@ -79,7 +94,7 @@ class DisplayController {
         let taskList = document.getElementById("taskList");
 
         let taskIndex = 0;
-        for (let task of this.currentTodo.tasks )
+        for (let task of this.todoController.currentTodo.tasks )
         {
         const taskHtml = this.renderTask(taskIndex, task)
         taskList.innerHTML += taskHtml;
@@ -90,16 +105,9 @@ class DisplayController {
 
     renderFooter() {
         let countSpan = document.querySelector('#completedTaskCount span')
-        const COMPLETE_TASK_COUNT = this.currentTodo.getTaskCount("status", TASK_STATUS.COMPLETE);
+        const COMPLETE_TASK_COUNT = this.todoController.currentTodo.getTaskCount("status", TASK_STATUS.COMPLETE);
 
         countSpan.textContent = COMPLETE_TASK_COUNT;
-    }
-
-    renderTodo() {
-        this.renderNav();
-        this.renderBody();
-        this.renderFooter();
-        this.renderIconSelect();
     }
 
     renderTask( index, task ) {

@@ -10,47 +10,14 @@ import "../css/reset.css";
 
 import { Todo } from "./todo";
 import { Task } from "./task";
+import { TodoController } from "./todoController";
 import { DisplayController } from "./displayController";
 import { AddTaskController } from "./addTaskController";
 import { TASK_STATUS, TASK_PRIORITY } from "./constants";
 
-
-let todoList = [];
-
-function genExample() {
-    let todo1 = new Todo("Test Todo 1");
-
-    let task1 = new Task("code","Coding Todo App", "Code Vanilla JS Todo App","9am", null,  TASK_STATUS.INCOMPLETE, "extreme")
-    let task2 = new Task("calculate", "Doing Leetcode", "Study Data Structures and Algorithms", "10am", null,  TASK_STATUS.INCOMPLETE, "medium")
-    let task3 = new Task("local_cafe","Brewing Coffee", "Just kidding im broke","11am", null,  TASK_STATUS.COMPLETE, "extreme")
-    let task4 = new Task("Doing SQL", "I am too stupid even for SQL...", null, null, "progressing", "medium")
-    
-    let todo2 = new Todo("Test Todo 2");
-    
-    todo1.addTask(task1);
-    todo1.addTask(task2)
-    
-    todoList.push(todo1)
-    
-    // console.log(todoList)
-    
-    todo1.addTask(task3);
-    todo2.addTask(task4)
-    
-    todoList.push(todo2)
-    console.log(todoList)
-}
-
-genExample()
-
-
-const displayController = new DisplayController();
-// Check local Storage for saved data
-// Create a default 
-
-const addTaskController = new AddTaskController();
-
-displayController.currentTodo = todo1 // delete
+const todoController = new TodoController();
+const displayController = new DisplayController(todoController);
+const addTaskController = new AddTaskController(todoController);
 
 
 // make hamburger button active
