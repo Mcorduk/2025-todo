@@ -50,6 +50,21 @@ class Task {
   
       this._priority = newPriority;
     }
+
+    toggleStatus() {
+      if(this.status === TASK_STATUS.INCOMPLETE) {
+        this.status = TASK_STATUS.COMPLETE;
+      } else if(this.status === TASK_STATUS.COMPLETE) {
+        this.status = TASK_STATUS.INCOMPLETE;
+      }
+    }
+  
+    togglePriority(index) {
+      const priorities = Object.values(TASK_PRIORITY)
+      let priorityIndex = priorities.indexOf(this.priority)
+  
+      this.priority = priorities[priorityIndex + 1]
+    }
   }
 
   export { Task };

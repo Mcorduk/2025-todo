@@ -31,24 +31,6 @@ class Todo {
     }
   }
 
-  toggleTaskStatus(index) {
-    let task = this.getTask(index); 
-    if(task.status === TASK_STATUS.INCOMPLETE) {
-      task.status = "complete";
-    } else if(task.status === TASK_STATUS.COMPLETE) {
-      task.status = "incomplete";
-    }
-  }
-
-  toggleTaskPriority(index) {
-    let task = this.getTask(index); 
-    
-    const priorities = Object.values(TASK_PRIORITY)
-    let priorityIndex = priorities.indexOf(task.priority)
-
-    task.priority = priorities[priorityIndex + 1]
-  }
-
   getTaskCount(property = TASK_PROPERTY.STATUS, value = TASK_STATUS.INCOMPLETE) {
     let count = 0;
 
