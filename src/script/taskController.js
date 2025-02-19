@@ -1,7 +1,7 @@
-import { MATERIAL_ICONS } from "./constants";
+import { MATERIAL_ICONS, TASK_STATUS } from "./constants";
 import { Task } from "./task";
 
-class AddTaskController {
+class TaskController {
     constructor(todoController, displayController){
         this._todoController = todoController;
         this._displayController = displayController;
@@ -17,15 +17,18 @@ class AddTaskController {
     get currentIcon(){ return this._currentIcon; }
 
     setEventListeners(){
-        this.setTaskDialog()
+        // Task Completion Button on Hover over
+        this.setCompleteTask()
+
+        // Add a New Task Form Dialog
+        this.setAddTaskDialog()
         document.getElementById("sendTaskForm").addEventListener("click", () => this.sendTaskForm())
         
         document.getElementById("showTaskIconList").addEventListener("click", () => this.toggleIconList())
         this.iconDialog.addEventListener("click", (e) => this.selectIcon(e))
-
     }
 
-    setTaskDialog() {
+    setAddTaskDialog() {
         document.getElementById("showAddTaskDialog").addEventListener("click", () => {
             this.showAddTaskDialog()
         })
@@ -42,6 +45,17 @@ class AddTaskController {
             this._displayController.renderTodo();
             this.addTaskDialog.close()
         })
+    }
+
+    setCompleteTask() {
+        const completeButton = document.querySelector("button.complete-task")
+        const taskIndex = completeButton.dataset.taskIndex;
+
+        completeButton.addEventListener("click", () => {
+            const currentTodo = this.todoController.currentTodo;
+            const currentTask = currentTodo.tasks[taskIndex];
+            currentTask.status = TASK_STATUS.COMPLETE;
+        }) 
     }
 
     showAddTaskDialog() {
@@ -105,4 +119,4 @@ class AddTaskController {
     }
 }
 
-export { AddTaskController };
+export { TaskController };
