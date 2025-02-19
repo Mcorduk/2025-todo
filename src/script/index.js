@@ -10,9 +10,10 @@ const todoController = new TodoController();
 todoController.initialize();
 
 const displayController = new DisplayController(todoController);
+displayController.renderTodo();
+
 const taskController = new TaskController(todoController, displayController);
 
-displayController.renderTodo();
 taskController.setEventListeners();
 
 // make hamburger button active
