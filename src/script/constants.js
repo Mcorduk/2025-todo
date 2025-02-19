@@ -1,23 +1,23 @@
-  const TASK_PROPERTY = {
-    STATUS: "status",
-    PRIORITY: "priority",
-  }
-  
-  const TASK_STATUS = {
-    INCOMPLETE: "incomplete",
-    INPROGRESS: "inprogress",
-    COMPLETE: "complete",
-  };
-  
-  const TASK_PRIORITY = {
-    LOW: "low",
-    MEDIUM: "medium",
-    HIGH: "high",
-    EXTREME: "extreme",
-  };
+  const taskConst = Object.freeze({
+    PROPERTY: { 
+      STATUS: "status",
+      PRIORITY: "priority",
+    },
+    STATUS: {
+      INCOMPLETE: "incomplete",
+      INPROGRESS: "inprogress",
+      COMPLETE: "complete",
+    },
+    PRIORITY: {
+      LOW: "low",
+      MEDIUM: "medium",
+      HIGH: "high",
+      EXTREME: "extreme",
+    }
+});
 
   // default task icon should be checkmark
-  const MATERIAL_ICONS = [
+  const MATERIAL_ICONS = Object.freeze([
     "check", //default
     "alarm",
     "bookmark",
@@ -32,8 +32,8 @@
     "settings",
     "star",
     "task",
-];
+]);
 
   
-  export { TASK_PROPERTY, TASK_STATUS, TASK_PRIORITY, MATERIAL_ICONS };
+  export { taskConst, MATERIAL_ICONS };
   
