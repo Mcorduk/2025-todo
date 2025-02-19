@@ -1,53 +1,44 @@
 "use strict";
 
-import { TASK_STATUS, TASK_PRIORITY } from "./constants";
+import { taskConst } from "./constants";
 import { parse, format } from "date-fns";
 
 class Task {
 
-    static STATUSES = TASK_STATUS;
-    static PRIORITIES = TASK_PRIORITY;
-
-    constructor(icon, name, description, time, date, status = TASK_STATUS.INCOMPLETE, priority = TASK_PRIORITY.LOW) {
+    constructor(icon, name, description, time, date, status = taskConst.STATUS.INCOMPLETE, priority = taskConst.PRIORITY.LOW) {
       
-      this._icon = icon;
-      this._name = name;
-      this._description = description;
+      this.icon = icon;
+      this.name = name;
+      this.description = description;
       this._time = time;
       this._date = date;
       this._status = status;
       this._priority = priority;
     }
-    get icon() { return this._icon; }
-
-    get name() { return this._name; }
-
-    get description() { return this._description; }
 
     get time() { return this._time; }
 
-    get date() { return this.date; }
+    get date() { return this._date; }
 
     get status() { return this._status; }
 
     get priority() { return this._priority; }
 
-    set icon(icon) { this._icon = icon; }
-    
-    set name(name) { this._name = name; }
-
-    set description(description) { this._description = description; }
+    set date(date) { this._date = date} //Will add validation later on
 
     set time(time) { 
-        const parsedTime = parse(time, "HH:mm", new Date());
+      try {
 
+        const parsedTime = parse(time, "HH:mm", new Date());
         this._time = format(parsedTime, "ha").toLowerCase();
+      } catch {
+        
+        this._time = "";
+      }
     }
 
-    set date(date) { this._date = date; }
-
     set status(newStatus) {
-      const STATUSES = Object.values(TASK_STATUS)
+      const STATUSES = Object.values(taskConst.STATUS)
       if (!STATUSES.includes(newStatus)) {
         console.log("Please pick an appropriate status.");
         return;
@@ -57,7 +48,7 @@ class Task {
     }
 
     set priority(newPriority) {
-      const TASK_PRIORITIES = Object.values(TASK_PRIORITY);
+      const TASK_PRIORITIES = Object.values(taskConst.PRIORITY);
       if (!TASK_PRIORITIES.includes(newPriority)) {
         console.log("Please pick an appropriate priority.");
         return;
@@ -67,18 +58,19 @@ class Task {
     }
 
     toggleStatus() {
-      if(this.status === TASK_STATUS.INCOMPLETE) {
-        this.status = TASK_STATUS.COMPLETE;
-      } else if(this.status === TASK_STATUS.COMPLETE) {
-        this.status = TASK_STATUS.INCOMPLETE;
+      if(this.status === taskConst.STATUS.INCOMPLETE) {
+        this.status = taskConst.STATUS.COMPLETE;
+      } else if(this.status === taskConst.STATUS.COMPLETE) {
+        this.status = taskConst.STATUS.INCOMPLETE;
       }
     }
   
-    togglePriority(index) {
-      const priorities = Object.values(TASK_PRIORITY)
-      let priorityIndex = priorities.indexOf(this.priority)
+    togglePriority() {
+
+      const priorities = Object.values(taskConst.PRIORITY)
+      let currentIndex = priorities.indexOf(this.priority)
   
-      this.priority = priorities[priorityIndex + 1]
+      this.priority = priorities[(currentIndex + 1) % priorities.length];
     }
   }
 
