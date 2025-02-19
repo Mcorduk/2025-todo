@@ -1,13 +1,6 @@
 "use strict";
 
-import "../css/common-style.css";
-import "../css/body-style.css";
-import "../css/nav-style.css";
-import "../css/add-task-dialog.css";
-import "../css/icon-select-dialog.css";
-import "../css/task-hover.css";
-import "../css/hamburger.css";
-import "../css/reset.css";
+import "../css/main.css";
 
 import { TodoController } from "./todoController";
 import { DisplayController } from "./displayController";
@@ -17,6 +10,8 @@ const todoController = new TodoController();
 const displayController = new DisplayController(todoController);
 const taskController = new TaskController(todoController, displayController);
 
+displayController.renderTodo();
+taskController.setEventListeners();
 
 // make hamburger button active
 //
