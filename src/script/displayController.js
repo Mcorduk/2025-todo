@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 import { MATERIAL_ICONS, taskConst } from './constants';
 
 class DisplayController {
+
     static #instance = null;
 
     constructor(todoController) {
@@ -84,31 +85,33 @@ class DisplayController {
     }
     
     renderBody() {
-    
-
         let taskList = document.getElementById("taskList");
 
         taskList.innerHTML = "";
 
         let taskIndex = 0;
-        for (let task of this.todoController.currentTodo.tasks )
-        {
-        const taskHtml = this.renderTask(taskIndex, task)
-        taskList.innerHTML += taskHtml;
+        for (let task of this.todoController.currentTodo.tasks ) {
+            const taskHtml = this.renderTask(taskIndex, task, "incomplete")
+            taskList.innerHTML += taskHtml;
 
-        taskIndex++;
+            taskIndex++;
         }
     }
 
     renderFooter() {
+
         let countSpan = document.querySelector('#completedTaskCount span')
         const COMPLETE_TASK_COUNT = this.todoController.currentTodo.getTaskCount("status", taskConst.STATUS.COMPLETE);
 
         countSpan.textContent = COMPLETE_TASK_COUNT;
     }
 
-    renderTask( index, task ) {
-        console.log("rendering this todo of " + task.name)
+    renderTask( index, task, statusValue ) {
+
+        if(!(task.status === statusValue)){
+
+            return "";
+        }
 
         const taskIndex = index;
         const taskIcon = task.icon
@@ -130,7 +133,7 @@ class DisplayController {
                         </div>
                     </div>
                     <div id="taskTime" class="dark-gray montserrat">${taskTime}</div>
-                    <button data-task-index="${taskIndex} class="btn-floating green hover-button complete-task">
+                    <button data-task-index="${taskIndex}" class="btn-floating green hover-button complete-task">
                         <span class="material-symbols-sharp blue-icon">
                                 check
                             </span>

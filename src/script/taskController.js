@@ -50,28 +50,44 @@ class TaskController {
             // get this added to current Todo's task list
             const currentTodo = this.todoController.currentTodo;
             currentTodo.tasks = [...currentTodo.tasks,newTask];
-            this._displayController.renderTodo();
+
+            this._displayController.renderTodo(); //render
+            this.setCompleteTask(); //re-attach event listeners 
+
             this.addTaskDialog.close()
         })
     }
 
     setCompleteTask() {
-        const completeButton = document.querySelector("button.complete-task")
-        const taskIndex = completeButton.dataset.taskIndex;
+        const completeButtons = document.querySelectorAll("button.complete-task")
 
-        completeButton.addEventListener("click", () => {
-            const currentTodo = this.todoController.currentTodo;
-            const currentTask = currentTodo.tasks[taskIndex];
-            currentTask.status = taskConst.STATUS.COMPLETE;
-        }) 
-    }
+        completeButtons.forEach( 
+            (button) => {
+
+                button.addEventListener("click", () => {
+
+                    const currentTodo = this.todoController.currentTodo;
+
+                    const taskIndex = button.dataset.taskIndex;
+                    const currentTask = currentTodo.tasks[taskIndex];
+
+                    currentTask.status = taskConst.STATUS.COMPLETE;
+
+                    this._displayController.renderTodo(); //render
+                    this.setCompleteTask() //reattach eventListeners
+                })
+            }
+        );
+    };
+    
 
     showAddTaskDialog() {
+
         this.addTaskDialog.showModal();
-        console.log("Show Add Task Dialog event triggered.")
     }
 
     toggleIconList() {
+
         let iconDialog = document.getElementById("iconDialog");
 
         if(iconDialog.open) {
@@ -82,6 +98,7 @@ class TaskController {
     }
 
     selectIcon(event){
+        
         if (event.targetid !== "iconDialog") {
             this.iconDialog.close();
         }
