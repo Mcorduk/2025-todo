@@ -1,13 +1,21 @@
-import { MATERIAL_ICONS, TASK_STATUS } from "./constants";
+import { MATERIAL_ICONS, taskConst } from "./constants";
 import { Task } from "./task";
 
 class TaskController {
+    static #instance = null;
+
     constructor(todoController, displayController){
+        if(TaskController.#instance) {
+            return TaskController.#instance;
+        }
+
         this._todoController = todoController;
         this._displayController = displayController;
         this._currentIcon = MATERIAL_ICONS[0];  
         this.iconDialog = document.getElementById("iconDialog");
         this.addTaskDialog = document.getElementById("addTaskDialog")
+
+        TaskController.#instance = this;
 
         this.setEventListeners();
     }
@@ -54,7 +62,7 @@ class TaskController {
         completeButton.addEventListener("click", () => {
             const currentTodo = this.todoController.currentTodo;
             const currentTask = currentTodo.tasks[taskIndex];
-            currentTask.status = TASK_STATUS.COMPLETE;
+            currentTask.status = taskConst.STATUS.COMPLETE;
         }) 
     }
 

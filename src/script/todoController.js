@@ -1,12 +1,19 @@
 import { genExample } from "./helper";
 
 class TodoController {
+    static #instance = null;
+
     constructor() {
-        this._todos = [] // local storage check
+        
+        if(TodoController.#instance) {
+            return TodoController.#instance;
+        };
+
+        this._todos = []; // local storage check
         this._currentTodo;
         this._currentTodoIndex;
 
-        this.initialize();
+        TodoController.#instance = this;
     }
 
     get todos() { return this._todos}

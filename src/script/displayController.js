@@ -1,28 +1,21 @@
 "use strict";
 
-import { Todo } from './todo';
 import { format } from 'date-fns'
-import { MATERIAL_ICONS, TASK_STATUS } from './constants';
+import { MATERIAL_ICONS, taskConst } from './constants';
 
 class DisplayController {
+    static #instance = null;
+
     constructor(todoController) {
-        this._todoController = todoController;
 
-        this.renderTodo()
+        if(DisplayController.#instance) {
+            return DisplayController.#instance;
+        }
+
+        this.todoController = todoController;
+
+        DisplayController.#instance = this;
     }
-
-        get todoController() { return this._todoController }
-
-    // get currentTodo() { return this._currentTodo; }
-
-    // get currentTodoIndex() { return this._currentTodoIndex; }
-
-    // set currentTodo(Todo) { 
-    //     this._currentTodo = Todo
-    //     this.renderTodo()
-    // }
-
-    // set currentTodoIndex(currentTodoIndex) {this._currentTodoIndex = currentTodoIndex; }
 
     renderTodo() {
 
@@ -38,8 +31,8 @@ class DisplayController {
 
         const TITLE = currentTodo.name;
         
-        const ACTIVE_TASK_COUNT = currentTodo.getTaskCount("status", TASK_STATUS.INCOMPLETE);
-        const COMPLETE_TASK_COUNT = currentTodo.getTaskCount("status", TASK_STATUS.COMPLETE);
+        const ACTIVE_TASK_COUNT = currentTodo.getTaskCount("status", taskConst.STATUS.INCOMPLETE);
+        const COMPLETE_TASK_COUNT = currentTodo.getTaskCount("status", taskConst.STATUS.COMPLETE);
         const TOTAL_TASK_COUNT  = ACTIVE_TASK_COUNT + COMPLETE_TASK_COUNT;
 
         let completionPercentageText;
@@ -89,6 +82,7 @@ class DisplayController {
 
         nav.innerHTML = navHtml;
     }
+    
     renderBody() {
     
 
@@ -108,7 +102,7 @@ class DisplayController {
 
     renderFooter() {
         let countSpan = document.querySelector('#completedTaskCount span')
-        const COMPLETE_TASK_COUNT = this.todoController.currentTodo.getTaskCount("status", TASK_STATUS.COMPLETE);
+        const COMPLETE_TASK_COUNT = this.todoController.currentTodo.getTaskCount("status", taskConst.STATUS.COMPLETE);
 
         countSpan.textContent = COMPLETE_TASK_COUNT;
     }
@@ -136,6 +130,11 @@ class DisplayController {
                         </div>
                     </div>
                     <div id="taskTime" class="dark-gray montserrat">${taskTime}</div>
+                    <button data-task-index="${taskIndex} class="btn-floating green hover-button complete-task">
+                        <span class="material-symbols-sharp blue-icon">
+                                check
+                            </span>
+                    </button>
                 </div>
                 <hr>
         `
@@ -156,5 +155,6 @@ class DisplayController {
     }
 
   }
+
 
   export { DisplayController };
