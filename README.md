@@ -4,17 +4,11 @@ I will be doing both class version and function version.
 
 TODO:
  Step by Step implementation
-- Render The default Todo (all header and footer information)
-- There is two example tasks for the default todo
-- Render the todos in the default todo
-
-- Make Task form work, render Todo, render tasks's again
-- Make TaskDialog button work
-- When Form is sent or cancelled, make it disappear
-
+- Make a tab where Completed Tasks can be seen seperately
 
 FIX:
 - Form validation for required, max, min
+- When form is saved, it adds duplicated tasks
 
 
 IMPROVE:
