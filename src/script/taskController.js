@@ -4,101 +4,109 @@ import { Task } from "./task";
 class TaskController {
     static #instance = null;
 
-    constructor(todoController, displayController){
-        if(TaskController.#instance) {
+    constructor(todoController, displayController) {
+        if (TaskController.#instance) {
             return TaskController.#instance;
         }
 
         this._todoController = todoController;
         this._displayController = displayController;
-        this._currentIcon = MATERIAL_ICONS[0];  
+        this._currentIcon = MATERIAL_ICONS[0];
         this.iconDialog = document.getElementById("iconDialog");
-        this.addTaskDialog = document.getElementById("addTaskDialog")
+        this.addTaskDialog = document.getElementById("addTaskDialog");
 
         TaskController.#instance = this;
 
         this.setEventListeners();
     }
 
-    get todoController(){ return this._todoController }
+    get todoController() {
+        return this._todoController;
+    }
 
-    get currentIcon(){ return this._currentIcon; }
+    get currentIcon() {
+        return this._currentIcon;
+    }
 
-    setEventListeners(){
+    setEventListeners() {
         // Task Completion Button on Hover over
-        this.setCompleteTask()
+        this.setCompleteTask();
 
         // Add a New Task Form Dialog
-        this.setAddTaskDialog()
-        document.getElementById("sendTaskForm").addEventListener("click", () => this.sendTaskForm())
-        
-        document.getElementById("showTaskIconList").addEventListener("click", () => this.toggleIconList())
-        this.iconDialog.addEventListener("click", (e) => this.selectIcon(e))
+        this.setAddTaskDialog();
+        document
+            .getElementById("sendTaskForm")
+            .addEventListener("click", () => this.sendTaskForm());
+
+        document
+            .getElementById("showTaskIconList")
+            .addEventListener("click", () => this.toggleIconList());
+        this.iconDialog.addEventListener("click", (e) => this.selectIcon(e));
     }
 
     setAddTaskDialog() {
-        document.getElementById("showAddTaskDialog").addEventListener("click", () => {
-            this.showAddTaskDialog()
-        })
-        document.getElementById("closeAddTaskDialog").addEventListener("click", () => this.addTaskDialog.close())
+        document
+            .getElementById("showAddTaskDialog")
+            .addEventListener("click", () => {
+                this.showAddTaskDialog();
+            });
+        document
+            .getElementById("closeAddTaskDialog")
+            .addEventListener("click", () => this.addTaskDialog.close());
 
-        document.getElementById("addTaskForm").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const formData = this.sendTaskForm();
-            const newTask = this.createTaskFromForm(formData)
-            
-            // get this added to current Todo's task list
-            const currentTodo = this.todoController.currentTodo;
-            currentTodo.tasks = [...currentTodo.tasks,newTask];
+        document
+            .getElementById("addTaskForm")
+            .addEventListener("submit", (e) => {
+                e.preventDefault();
+                const formData = this.sendTaskForm();
+                const newTask = this.createTaskFromForm(formData);
 
-            this._displayController.renderTodo(); //render
-            this.setCompleteTask(); //re-attach event listeners 
+                // get this added to current Todo's task list
+                const currentTodo = this.todoController.currentTodo;
+                currentTodo.tasks = [...currentTodo.tasks, newTask];
 
-            this.addTaskDialog.close()
-        })
+                this._displayController.renderTodo(); //render
+                this.setCompleteTask(); //re-attach event listeners
+
+                this.addTaskDialog.close();
+            });
     }
 
     setCompleteTask() {
-        const completeButtons = document.querySelectorAll("button.complete-task")
-
-        completeButtons.forEach( 
-            (button) => {
-
-                button.addEventListener("click", () => {
-
-                    const currentTodo = this.todoController.currentTodo;
-
-                    const taskIndex = button.dataset.taskIndex;
-                    const currentTask = currentTodo.tasks[taskIndex];
-
-                    currentTask.status = taskConst.STATUS.COMPLETE;
-
-                    this._displayController.renderTodo(); //render
-                    this.setCompleteTask() //reattach eventListeners
-                })
-            }
+        const completeButtons = document.querySelectorAll(
+            "button.complete-task",
         );
-    };
-    
+
+        completeButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const currentTodo = this.todoController.currentTodo;
+
+                const taskIndex = button.dataset.taskIndex;
+                const currentTask = currentTodo.tasks[taskIndex];
+
+                currentTask.status = taskConst.STATUS.COMPLETE;
+
+                this._displayController.renderTodo(); //render
+                this.setCompleteTask(); //reattach eventListeners
+            });
+        });
+    }
 
     showAddTaskDialog() {
-
         this.addTaskDialog.showModal();
     }
 
     toggleIconList() {
-
         let iconDialog = document.getElementById("iconDialog");
 
-        if(iconDialog.open) {
-            iconDialog.close(); 
+        if (iconDialog.open) {
+            iconDialog.close();
         } else {
-            iconDialog.showModal(); 
+            iconDialog.showModal();
         }
     }
 
-    selectIcon(event){
-        
+    selectIcon(event) {
         if (event.targetid !== "iconDialog") {
             this.iconDialog.close();
         }
@@ -109,35 +117,34 @@ class TaskController {
             this.changeTaskIcon();
             this.iconDialog.close();
         }
-        
     }
 
-    changeTaskIcon(){
+    changeTaskIcon() {
         let icon = document.getElementById("showTaskIconList");
-    
+
         icon.textContent = this._currentIcon;
     }
 
-    sendTaskForm(){
+    sendTaskForm() {
         const form = document.getElementById("addTaskForm");
         const formData = new FormData(form);
         return formData;
     }
 
-    createTaskFromForm(formData){
-        if(!formData) {
-        throw new Error("Form data is corrupted")
+    createTaskFromForm(formData) {
+        if (!formData) {
+            throw new Error("Form data is corrupted");
         }
 
         const task = new Task();
 
         // Fetch icon
         const icon = document.getElementById("showTaskIconList").textContent;
-        
-        formData.append("icon", icon)
 
-        for(let [key, value] of formData.entries()) { 
-            task[key] = value
+        formData.append("icon", icon);
+
+        for (let [key, value] of formData.entries()) {
+            task[key] = value;
         }
 
         return task;

@@ -1,34 +1,33 @@
-
-  nav{
+nav {
     background-image: url("../image/blue-mountain.jpg");
     background-size: cover;
     min-height: 200px;
     display: flex;
     flex-direction: row;
     width: 100%;
-  }
+}
 
-  #leftHeader{
+#leftHeader {
     padding: 20px;
 
     max-width: 60%;
-  }
+}
 
-  #todoHeader{
+#todoHeader {
     color: white;
     font-size: 1.6rem;
 
     & h1 {
-      margin: 0 0 20px 0;
+        margin: 0 0 20px 0;
     }
-  }
+}
 
-  #currentDate {
+#currentDate {
     color: lightgray;
     font-size: 0.85rem;
-  }
+}
 
-  #rightHeader {
+#rightHeader {
     display: flex;
     flex-direction: column;
     width: 40%;
@@ -41,26 +40,26 @@
     -webkit-backdrop-filter: blur(1px);
 
     #todoTaskStatuses {
-      display: flex;
+        display: flex;
 
-      #completedTasks, #incompleteTasks {
-        text-align: right;
-      }
+        #completedTasks,
+        #incompleteTasks {
+            text-align: right;
+        }
 
-      #completedTasks .number, #incompleteTasks .number {
-        font-size: 1.6rem;
-        color: white;
-        font-weight: 500;
-      }
+        #completedTasks .number,
+        #incompleteTasks .number {
+            font-size: 1.6rem;
+            color: white;
+            font-weight: 500;
+        }
 
-      #completedTasks {
-        padding-right: 20px;
-      }
+        #completedTasks {
+            padding-right: 20px;
+        }
     }
 
-    #completionPercentage p{
-      text-align: center;
+    #completionPercentage p {
+        text-align: center;
     }
-  }
-
-  
+}

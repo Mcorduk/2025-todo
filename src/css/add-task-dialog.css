@@ -3,19 +3,17 @@
     border: 0;
 }
 
-#addTaskDialog > div{
+#addTaskDialog > div {
     display: flex;
     flex-direction: column;
     min-width: 360px;
     max-width: 60%;
     max-height: 500px;
-    background-color: #46539E;
+    background-color: #46539e;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
     padding-top: 0px;
-
 }
-
 
 .dialog-header {
     display: flex;
@@ -23,11 +21,11 @@
     align-items: center;
     padding: 15px;
 
-    span{
+    span {
         color: white;
         font-size: 36px;
     }
-    
+
     h2 {
         margin: 0;
         color: white;
@@ -86,7 +84,6 @@
     }
 }
 
-
 .form-group {
     margin-bottom: 15px;
 }
@@ -97,7 +94,8 @@
     color: white;
 }
 
-.form-group input, .form-group textarea {
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
@@ -110,7 +108,8 @@
     text-align: right;
 }
 
-.cancel-btn, .save-btn {
+.cancel-btn,
+.save-btn {
     padding: 8px 16px;
     border: none;
     border-radius: 4px;

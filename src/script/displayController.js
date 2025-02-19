@@ -1,15 +1,13 @@
 "use strict";
 
-import { format } from 'date-fns'
-import { MATERIAL_ICONS, taskConst } from './constants';
+import { format } from "date-fns";
+import { MATERIAL_ICONS, taskConst } from "./constants";
 
 class DisplayController {
-
     static #instance = null;
 
     constructor(todoController) {
-
-        if(DisplayController.#instance) {
+        if (DisplayController.#instance) {
             return DisplayController.#instance;
         }
 
@@ -19,35 +17,41 @@ class DisplayController {
     }
 
     renderTodo() {
-
         this.renderNav();
         this.renderBody();
         this.renderFooter();
         this.renderIconSelect();
     }
 
-    renderNav(){
-
+    renderNav() {
         const currentTodo = this.todoController.currentTodo;
 
         const TITLE = currentTodo.name;
-        
-        const ACTIVE_TASK_COUNT = currentTodo.getTaskCount("status", taskConst.STATUS.INCOMPLETE);
-        const COMPLETE_TASK_COUNT = currentTodo.getTaskCount("status", taskConst.STATUS.COMPLETE);
-        const TOTAL_TASK_COUNT  = ACTIVE_TASK_COUNT + COMPLETE_TASK_COUNT;
+
+        const ACTIVE_TASK_COUNT = currentTodo.getTaskCount(
+            "status",
+            taskConst.STATUS.INCOMPLETE,
+        );
+        const COMPLETE_TASK_COUNT = currentTodo.getTaskCount(
+            "status",
+            taskConst.STATUS.COMPLETE,
+        );
+        const TOTAL_TASK_COUNT = ACTIVE_TASK_COUNT + COMPLETE_TASK_COUNT;
 
         let completionPercentageText;
-         if(TOTAL_TASK_COUNT > 0) {
-            let completionPercentage = Math.round((COMPLETE_TASK_COUNT/TOTAL_TASK_COUNT)*100)
-            completionPercentageText = completionPercentage + "% done"
+        if (TOTAL_TASK_COUNT > 0) {
+            let completionPercentage = Math.round(
+                (COMPLETE_TASK_COUNT / TOTAL_TASK_COUNT) * 100,
+            );
+            completionPercentageText = completionPercentage + "% done";
+        } else {
+            // Maybe change this to "Get started" and on click add new Dialog box opens
+            completionPercentageText = "No tasks yet";
+        }
 
-         } else { // Maybe change this to "Get started" and on click add new Dialog box opens
-            completionPercentageText = "No tasks yet"
-         }
-    
-        const today = format(new Date(), 'MMM d, yyyy')
+        const today = format(new Date(), "MMM d, yyyy");
 
-        const navHtml =  `
+        const navHtml = `
             <div id="leftHeader">
                 <div id="sidenav">
                     <button class="hamb" aria-label="Open Menu"><span class="sr-only">Open Menu</span><svg class="ham" viewBox="0 0 100 100"><path class="line top" d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path><path class="line middle" d="m 30,50 h 40"></path><path class="line bottom" d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path></svg></button>
@@ -76,22 +80,22 @@ class DisplayController {
                     <p class="gray">${completionPercentageText}</p>
                 </div>
             </div>
-        `
+        `;
 
-        let nav = document.querySelector('nav');
-        nav.innerHTML = '';
+        let nav = document.querySelector("nav");
+        nav.innerHTML = "";
 
         nav.innerHTML = navHtml;
     }
-    
+
     renderBody() {
         let taskList = document.getElementById("taskList");
 
         taskList.innerHTML = "";
 
         let taskIndex = 0;
-        for (let task of this.todoController.currentTodo.tasks ) {
-            const taskHtml = this.renderTask(taskIndex, task, "incomplete")
+        for (let task of this.todoController.currentTodo.tasks) {
+            const taskHtml = this.renderTask(taskIndex, task, "incomplete");
             taskList.innerHTML += taskHtml;
 
             taskIndex++;
@@ -99,25 +103,26 @@ class DisplayController {
     }
 
     renderFooter() {
-
-        let countSpan = document.querySelector('#completedTaskCount span')
-        const COMPLETE_TASK_COUNT = this.todoController.currentTodo.getTaskCount("status", taskConst.STATUS.COMPLETE);
+        let countSpan = document.querySelector("#completedTaskCount span");
+        const COMPLETE_TASK_COUNT =
+            this.todoController.currentTodo.getTaskCount(
+                "status",
+                taskConst.STATUS.COMPLETE,
+            );
 
         countSpan.textContent = COMPLETE_TASK_COUNT;
     }
 
-    renderTask( index, task, statusValue ) {
-
-        if(!(task.status === statusValue)){
-
+    renderTask(index, task, statusValue) {
+        if (!(task.status === statusValue)) {
             return "";
         }
 
         const taskIndex = index;
-        const taskIcon = task.icon
-        const taskDescription = task.description
-        const taskTitle = task.name
-        const taskTime = task.time
+        const taskIcon = task.icon;
+        const taskDescription = task.description;
+        const taskTitle = task.name;
+        const taskTime = task.time;
 
         const taskHtml = `
                 <div class="task" data-task-index="${taskIndex}">
@@ -140,9 +145,9 @@ class DisplayController {
                     </button>
                 </div>
                 <hr>
-        `
+        `;
 
-        return taskHtml
+        return taskHtml;
     }
 
     renderIconSelect() {
@@ -152,12 +157,10 @@ class DisplayController {
             const iconHtml = `<div class="task-icon">
                                 <span class="material-symbols-sharp blue-icon icon-selection">${icon}</span>
                             </div>`;
-            
+
             div.innerHTML += iconHtml;
         }
     }
+}
 
-  }
-
-
-  export { DisplayController };
+export { DisplayController };

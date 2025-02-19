@@ -1,4 +1,4 @@
-#taskList{
+#taskList {
     padding: 20px;
 }
 
@@ -15,7 +15,7 @@
         justify-content: center;
         width: 50px; /* Adjust size as needed */
         height: 50px; /* Adjust size as needed */
-        border:lightgray 1px solid;
+        border: lightgray 1px solid;
         border-radius: 50%; /* Makes it a circle */
         margin-right: 20px;
     }
@@ -52,7 +52,7 @@
             font-size: 0.8rem;
             font-weight: 600;
             margin: 0;
-            
+
             span {
                 display: inline-block;
                 background-color: gray;
@@ -72,13 +72,13 @@
         margin: 0;
         width: 50px;
         height: 50px;
-        background-color: #2DB7E5;
+        background-color: #2db7e5;
         display: flex;
         justify-content: center;
         align-items: center;
 
         span {
-            font-size:36px;
+            font-size: 36px;
         }
     }
 }
