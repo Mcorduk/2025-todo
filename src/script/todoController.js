@@ -4,7 +4,7 @@ class TodoController {
     static #instance = null;
 
     constructor() {
-        
+
         if(TodoController.#instance) {
             return TodoController.#instance;
         };
@@ -22,7 +22,8 @@ class TodoController {
         const app = document.getElementById('app');
         this.currentTodoIndex = app.dataset.todoIndex;
         // app.setAttribute("data-todo-index", todoIndex)
-        return this.todos[this.currentTodoIndex];
+        this._currentTodo = this.todos[this.currentTodoIndex];
+        return this._currentTodo;
     }
 
     get currentTodoIndex (){ return this._currentTodoIndex }

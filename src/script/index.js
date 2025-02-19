@@ -7,6 +7,8 @@ import { DisplayController } from "./displayController";
 import { TaskController } from "./taskController";
 
 const todoController = new TodoController();
+todoController.initialize();
+
 const displayController = new DisplayController(todoController);
 const taskController = new TaskController(todoController, displayController);
 
