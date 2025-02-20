@@ -21,6 +21,7 @@ class DisplayController {
         this.renderBody();
         this.renderFooter();
         this.renderIconSelect();
+        this.setCompletedTasks();
     }
 
     renderNav() {
@@ -89,21 +90,13 @@ class DisplayController {
     }
 
     renderBody() {
-        let taskList = document.getElementById("taskList");
-
-        taskList.innerHTML = "";
-
-        let taskIndex = 0;
-        for (let task of this.todoController.currentTodo.tasks) {
-            const taskHtml = this.renderTask(taskIndex, task, "incomplete");
-            taskList.innerHTML += taskHtml;
-
-            taskIndex++;
-        }
+        this.renderTask(taskConst.STATUS.COMPLETE);
+        this.renderTask(taskConst.STATUS.INCOMPLETE);
     }
 
     renderFooter() {
         let countSpan = document.querySelector("#completedTaskCount span");
+
         const COMPLETE_TASK_COUNT =
             this.todoController.currentTodo.getTaskCount(
                 "status",
@@ -113,7 +106,7 @@ class DisplayController {
         countSpan.textContent = COMPLETE_TASK_COUNT;
     }
 
-    renderTask(index, task, statusValue) {
+    generateTask(index, task, statusValue) {
         if (!(task.status === statusValue)) {
             return "";
         }
@@ -150,6 +143,24 @@ class DisplayController {
         return taskHtml;
     }
 
+    renderTask(status) {
+        let taskList;
+        if (status === taskConst.STATUS.INCOMPLETE) {
+            taskList = document.getElementById("taskList");
+        } else if (status === taskConst.STATUS.COMPLETE) {
+            taskList = document.getElementById("completedTaskList");
+        }
+        taskList.innerHTML = "";
+
+        let taskIndex = 0;
+        for (let task of this.todoController.currentTodo.tasks) {
+            const taskHtml = this.generateTask(taskIndex, task, status);
+            taskList.innerHTML += taskHtml;
+
+            taskIndex++;
+        }
+    }
+
     renderIconSelect() {
         let div = document.getElementById("iconSelection");
 
@@ -160,6 +171,22 @@ class DisplayController {
 
             div.innerHTML += iconHtml;
         }
+    }
+
+    setCompletedTasks() {
+        // Attach to a parent that isn't re-rendered (e.g., document or app container)
+        document.addEventListener("click", (event) => {
+            const slideUpButton = event.target.closest("#showCompletedTasks");
+            if (!slideUpButton) return; // Exit if not the button
+
+            const tasksContainer = document.getElementById(
+                "completedTasksContainer",
+            );
+            const tasksList = document.getElementById("completedTaskList");
+
+            tasksContainer.classList.toggle("slide-up");
+            tasksList.classList.toggle("hidden");
+        });
     }
 }
 
