@@ -177,15 +177,17 @@ class TaskController {
         }
 
         // Prevent event handler being added twice, replace with fresh btn
-
         const showCompletedTasks = document.querySelector(
             "#showCompletedTasks",
         );
         const newBtn = clearEventListeners(showCompletedTasks);
 
         newBtn.addEventListener("click", () => {
+            const icon = document.querySelector("span.north");
+
             completedTasksContainer.classList.toggle("slide-up");
             completedTaskList.classList.toggle("hidden");
+            icon.classList.toggle("rotated");
         });
     }
 }

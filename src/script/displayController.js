@@ -222,6 +222,8 @@ class DisplayController {
             todo.addEventListener("click", () => {
                 const todoIndex = todo.dataset.todoIndex;
                 app.dataset.todoIndex = todoIndex;
+                const sidebar = document.querySelector(".sidebar");
+                sidebar.classList.toggle("is-closed");
                 this.renderTodo(); //render
 
                 TaskController.instance.setToggleTaskStatus();
