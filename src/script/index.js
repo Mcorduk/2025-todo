@@ -27,7 +27,6 @@ button.addEventListener("click", () => {
 const toggleBtn = document.querySelector(".hamb");
 const svg = document.querySelector(".hamb > svg.ham");
 const sidebar = document.querySelector(".sidebar");
-svg.classList.toggle("black");
 
 toggleBtn.addEventListener("click", function () {
     sidebar.classList.toggle("is-closed");
