@@ -1,6 +1,6 @@
 import { MATERIAL_ICONS } from "./constants";
 import { Task } from "./task";
-import { clearEventListenersById } from "./helper";
+import { clearEventListeners } from "./helper";
 
 class TaskController {
     static #instance = null;
@@ -19,6 +19,10 @@ class TaskController {
         TaskController.#instance = this;
 
         this.setEventListeners();
+    }
+
+    static get instance() {
+        return this.#instance;
     }
 
     get todoController() {
@@ -60,7 +64,8 @@ class TaskController {
             .getElementById("closeAddTaskDialog")
             .addEventListener("click", () => this.addTaskDialog.close());
 
-        const newForm = clearEventListenersById("addTaskForm");
+        const addTaskForm = document.querySelector("#addTaskForm");
+        const newForm = clearEventListeners(addTaskForm);
         newForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const formData = this.sendTaskForm();
@@ -83,7 +88,8 @@ class TaskController {
         );
 
         completeButtons.forEach((button) => {
-            button.addEventListener("click", () => {
+            const newBtn = clearEventListeners(button);
+            newBtn.addEventListener("click", () => {
                 const currentTodo = this.todoController.currentTodo;
 
                 const taskIndex = button.dataset.taskIndex;
@@ -171,8 +177,11 @@ class TaskController {
         }
 
         // Prevent event handler being added twice, replace with fresh btn
-        showCompletedBtn.replaceWith(showCompletedBtn.cloneNode(true));
-        const newBtn = document.getElementById("showCompletedTasks");
+
+        const showCompletedTasks = document.querySelector(
+            "#showCompletedTasks",
+        );
+        const newBtn = clearEventListeners(showCompletedTasks);
 
         newBtn.addEventListener("click", () => {
             completedTasksContainer.classList.toggle("slide-up");
