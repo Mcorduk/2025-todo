@@ -5,11 +5,13 @@ I will be doing both class version and function version.
 TODO:
 Step by Step implementation
 
-- Make a tab where Completed Tasks can be seen seperately
+- Make a tab for Todos (make it function)
 - Add localStorage
 
 FIX:
 
+- sidebar breaking on reRender
+-
 - Form validation for required, max, min
 
 IMPROVE:

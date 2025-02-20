@@ -2,6 +2,8 @@
 
 import { format } from "date-fns";
 import { MATERIAL_ICONS, taskConst } from "./constants";
+import { clearEventListeners } from "./helper";
+import { TaskController } from "./taskController";
 
 class DisplayController {
     static #instance = null;
@@ -16,6 +18,8 @@ class DisplayController {
         DisplayController.#instance = this;
 
         this.renderBody();
+        this.renderSidebar();
+        this.setRenderSidebarTodos();
     }
 
     renderTodo() {
@@ -55,9 +59,6 @@ class DisplayController {
 
         const navHtml = `
             <div id="leftHeader">
-                <div id="sidenav">
-                    <button class="hamb" aria-label="Open Menu"><span class="sr-only">Open Menu</span><svg class="ham" viewBox="0 0 100 100"><path class="line top" d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path><path class="line middle" d="m 30,50 h 40"></path><path class="line bottom" d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path></svg></button>
-                </div>
                 <div id="todoHeader">
                     <h1 class="montserrat">${TITLE}</h1>
                 </div>
@@ -118,8 +119,12 @@ class DisplayController {
         const taskTitle = task.name;
         const taskTime = task.time;
 
+        function isTaskComplete() {
+            return statusValue === taskConst.STATUS.COMPLETE;
+        }
+
         const taskHtml = `
-                <div class="task" data-task-index="${taskIndex}">
+                <div class="task${isTaskComplete() ? " task-complete" : ""}" data-task-index="${taskIndex}">
                     <div class="flex">
                         <div id="taskIcon">
                             <span class="material-symbols-sharp blue-icon">
@@ -134,7 +139,7 @@ class DisplayController {
                     <div id="taskTime" class="dark-gray montserrat">${taskTime}</div>
                     <button data-task-index="${taskIndex}" class="btn-floating green hover-button complete-task">
                         <span class="material-symbols-sharp blue-icon">
-                                check
+                                ${isTaskComplete() ? "undo" : "check"}
                             </span>
                     </button>
                 </div>
@@ -147,9 +152,9 @@ class DisplayController {
     renderTask(status) {
         let taskList;
         if (status === taskConst.STATUS.INCOMPLETE) {
-            taskList = document.getElementById("taskList");
+            taskList = document.querySelector("#taskList");
         } else if (status === taskConst.STATUS.COMPLETE) {
-            taskList = document.getElementById("completedTaskList");
+            taskList = document.querySelector("#completedTaskList");
         }
         taskList.innerHTML = "";
 
@@ -159,6 +164,38 @@ class DisplayController {
             taskList.innerHTML += taskHtml;
 
             taskIndex++;
+        }
+    }
+
+    renderSidebar() {
+        this.renderSidebarTodos();
+    }
+
+    generateTodo(index, todo) {
+        const todoIndex = index;
+        const todoIcon = todo.icon;
+        const todoName = todo.name;
+
+        const todoHtml = ` 
+            <div class="todo" data-todo-index="${todoIndex}">
+                <span class="material-symbols-sharp"> ${todoIcon}</span>
+                <h3>${todoName}</h3>
+            </div>
+        `;
+
+        return todoHtml;
+    }
+
+    renderSidebarTodos() {
+        const todoList = document.querySelector("#todoList");
+        todoList.innerHTML = "";
+
+        let todoIndex = 0;
+        for (let todo of this.todoController.todos) {
+            const todoHtml = this.generateTodo(todoIndex, todo);
+            todoList.innerHTML += todoHtml;
+
+            todoIndex++;
         }
     }
 
@@ -172,6 +209,24 @@ class DisplayController {
 
             div.innerHTML += iconHtml;
         }
+    }
+
+    setRenderSidebarTodos() {
+        const app = document.querySelector("#app");
+
+        const todos = document.querySelectorAll(".todo");
+
+        todos.forEach((todoNode) => {
+            const todo = clearEventListeners(todoNode);
+
+            todo.addEventListener("click", () => {
+                const todoIndex = todo.dataset.todoIndex;
+                app.dataset.todoIndex = todoIndex;
+                this.renderTodo(); //render
+
+                TaskController.instance.setToggleTaskStatus();
+            });
+        });
     }
 }
 
