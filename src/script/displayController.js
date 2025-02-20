@@ -14,6 +14,8 @@ class DisplayController {
         this.todoController = todoController;
 
         DisplayController.#instance = this;
+
+        this.renderBody();
     }
 
     renderTodo() {
@@ -21,7 +23,6 @@ class DisplayController {
         this.renderBody();
         this.renderFooter();
         this.renderIconSelect();
-        this.setCompletedTasks();
     }
 
     renderNav() {
@@ -171,22 +172,6 @@ class DisplayController {
 
             div.innerHTML += iconHtml;
         }
-    }
-
-    setCompletedTasks() {
-        // Attach to a parent that isn't re-rendered (e.g., document or app container)
-        document.addEventListener("click", (event) => {
-            const slideUpButton = event.target.closest("#showCompletedTasks");
-            if (!slideUpButton) return; // Exit if not the button
-
-            const tasksContainer = document.getElementById(
-                "completedTasksContainer",
-            );
-            const tasksList = document.getElementById("completedTaskList");
-
-            tasksContainer.classList.toggle("slide-up");
-            tasksList.classList.toggle("hidden");
-        });
     }
 }
 

@@ -1,5 +1,6 @@
-import { MATERIAL_ICONS, taskConst } from "./constants";
+import { MATERIAL_ICONS } from "./constants";
 import { Task } from "./task";
+import { clearEventListenersById } from "./helper";
 
 class TaskController {
     static #instance = null;
@@ -24,23 +25,27 @@ class TaskController {
         return this._todoController;
     }
 
+    get displayController() {
+        return this._displayController;
+    }
+
     get currentIcon() {
         return this._currentIcon;
     }
 
     setEventListeners() {
         // Task Completion Button on Hover over
-        this.setCompleteTask();
+        this.setToggleTaskStatus();
+
+        this.setCompletedTasks();
 
         // Add a New Task Form Dialog
         this.setAddTaskDialog();
-        document
-            .getElementById("sendTaskForm")
-            .addEventListener("click", () => this.sendTaskForm());
 
         document
             .getElementById("showTaskIconList")
             .addEventListener("click", () => this.toggleIconList());
+
         this.iconDialog.addEventListener("click", (e) => this.selectIcon(e));
     }
 
@@ -50,29 +55,29 @@ class TaskController {
             .addEventListener("click", () => {
                 this.showAddTaskDialog();
             });
+
         document
             .getElementById("closeAddTaskDialog")
             .addEventListener("click", () => this.addTaskDialog.close());
 
-        document
-            .getElementById("addTaskForm")
-            .addEventListener("submit", (e) => {
-                e.preventDefault();
-                const formData = this.sendTaskForm();
-                const newTask = this.createTaskFromForm(formData);
+        const newForm = clearEventListenersById("addTaskForm");
+        newForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const formData = this.sendTaskForm();
+            const newTask = this.createTaskFromForm(formData);
 
-                // get this added to current Todo's task list
-                const currentTodo = this.todoController.currentTodo;
-                currentTodo.tasks = [...currentTodo.tasks, newTask];
+            // get this added to current Todo's task list
+            const currentTodo = this.todoController.currentTodo;
+            currentTodo.tasks = [...currentTodo.tasks, newTask];
 
-                this._displayController.renderTodo(); //render
-                this.setCompleteTask(); //re-attach event listeners
+            this.displayController.renderTodo(); //render
+            this.setToggleTaskStatus(); //re-attach event listeners
 
-                this.addTaskDialog.close();
-            });
+            this.addTaskDialog.close();
+        });
     }
 
-    setCompleteTask() {
+    setToggleTaskStatus() {
         const completeButtons = document.querySelectorAll(
             "button.complete-task",
         );
@@ -84,10 +89,10 @@ class TaskController {
                 const taskIndex = button.dataset.taskIndex;
                 const currentTask = currentTodo.tasks[taskIndex];
 
-                currentTask.status = taskConst.STATUS.COMPLETE;
+                currentTask.toggleStatus();
 
-                this._displayController.renderTodo(); //render
-                this.setCompleteTask(); //reattach eventListeners
+                this.displayController.renderTodo(); //render
+                this.setToggleTaskStatus(); //reattach eventListeners
             });
         });
     }
@@ -148,6 +153,31 @@ class TaskController {
         }
 
         return task;
+    }
+
+    setCompletedTasks() {
+        const showCompletedBtn = document.getElementById("showCompletedTasks");
+        const completedTasksContainer = document.getElementById(
+            "completedTasksContainer",
+        );
+        const completedTaskList = document.getElementById("completedTaskList");
+
+        if (
+            !showCompletedBtn ||
+            !completedTasksContainer ||
+            !completedTaskList
+        ) {
+            throw new Error("setCompletedTasks didnt work");
+        }
+
+        // Prevent event handler being added twice, replace with fresh btn
+        showCompletedBtn.replaceWith(showCompletedBtn.cloneNode(true));
+        const newBtn = document.getElementById("showCompletedTasks");
+
+        newBtn.addEventListener("click", () => {
+            completedTasksContainer.classList.toggle("slide-up");
+            completedTaskList.classList.toggle("hidden");
+        });
     }
 }
 
