@@ -55,4 +55,13 @@ function genExample() {
     return todos;
 }
 
-export { genExample };
+function clearEventListenersById(id) {
+    const node = document.getElementById(id);
+
+    node.replaceWith(node.cloneNode(true));
+    const newNode = document.getElementById(id);
+
+    return newNode;
+}
+
+export { genExample, clearEventListenersById };
