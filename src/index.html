@@ -6,7 +6,7 @@
         <!-- Google Material Icons -->
         <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,alarm,bookmark,calculate,check,code,delete,edit,group,home,local_cafe,mail,phone,settings,star,task,west"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,alarm,bookmark,calculate,check,code,delete,edit,group,home,keyboard_arrow_up,local_cafe,mail,phone,settings,star,task,west"
         />
 
         <title>Todo List</title>
@@ -62,19 +62,32 @@
                 </div>
                 <hr> -->
                 </div>
+                <footer id="completedTasksContainer">
+                    <nav>
+                        <div id="completedTaskCount">
+                            <p class="open-sans dark-gray">
+                                COMPLETED
+                                <span><!-- Completed task count --></span>
+                            </p>
+                        </div>
+                        <div>
+                            <button id="showCompletedTasks">
+                                <span class="material-symbols-sharp">
+                                    keyboard_arrow_up</span
+                                >
+                            </button>
+                        </div>
+                        <div>
+                            <button id="showAddTaskDialog">
+                                <span class="material-symbols-sharp">
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                    </nav>
+                    <section id="completedTaskList" class="hidden"></section>
+                </footer>
             </section>
-            <footer id="taskListFooter">
-                <div id="completedTaskCount">
-                    <p class="open-sans dark-gray">
-                        COMPLETED <span><!-- Completed task count --></span>
-                    </p>
-                </div>
-                <div>
-                    <button id="showAddTaskDialog">
-                        <span class="material-symbols-sharp"> add </span>
-                    </button>
-                </div>
-            </footer>
         </div>
 
         <aside class="sidebar"></aside>

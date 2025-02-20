@@ -1,47 +1,47 @@
-#taskList {
-    padding: 20px;
-}
+#app > section.flex-1 {
+    position: relative;
+    overflow: hidden;
 
-.task {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    width: 100%;
-
-    #taskIcon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px; /* Adjust size as needed */
-        height: 50px; /* Adjust size as needed */
-        border: lightgray 1px solid;
-        border-radius: 50%; /* Makes it a circle */
-        margin-right: 20px;
+    #taskList {
+        padding: 20px;
     }
 
-    #taskText {
-        text-align: left;
+    .task {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        width: 100%;
 
-        #taskHeader {
-            font-weight: 500;
+        #taskIcon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px; /* Adjust size as needed */
+            height: 50px; /* Adjust size as needed */
+            border: lightgray 1px solid;
+            border-radius: 50%; /* Makes it a circle */
+            margin-right: 20px;
         }
 
-        #taskDescription {
-            font-size: 0.8rem;
+        #taskText {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            #taskHeader {
+                font-weight: 500;
+            }
+
+            #taskDescription {
+                font-size: 0.8rem;
+            }
         }
     }
 }
 
-#taskListFooter {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-
+#completedTasksContainer {
     #completedTaskCount {
         display: flex;
         justify-content: center;
@@ -81,4 +81,39 @@
             font-size: 36px;
         }
     }
+}
+#completedTasksContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    background-color: white;
+    padding: 20px;
+    padding-top: 5px;
+    top: 80%;
+    position: absolute;
+    transition: all 0.3s ease-out;
+
+    nav {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    section {
+        width: 100%;
+    }
+}
+
+.slide-up {
+    top: 0% !important;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
 }

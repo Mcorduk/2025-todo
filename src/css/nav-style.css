@@ -1,4 +1,4 @@
-nav {
+#app > nav {
     background-image: url("../image/blue-mountain.jpg");
     background-size: cover;
     min-height: 200px;
