@@ -106,6 +106,19 @@
 
     section {
         width: 100%;
+
+        .task-complete {
+            opacity: 0.9;
+            #taskHeader,
+            #taskDescription,
+            #taskTime {
+                text-decoration: line-through;
+            }
+            span {
+                opacity: 0.6;
+                text-decoration: none;
+            }
+        }
     }
 }
 
