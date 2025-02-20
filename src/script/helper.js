@@ -47,6 +47,9 @@ function genExample() {
     let todo2 = new Todo("mail", "Post");
     let todo3 = new Todo("group", "Friends");
     let todo4 = new Todo("volunteer_activism", "Oni");
+
+    let todo11 = new Todo("add", "");
+
     let task5 = new Task(
         "alarm",
         "Get a Job",
@@ -57,7 +60,7 @@ function genExample() {
         "extreme",
     );
     let task6 = new Task(
-        "calculate",
+        "favorite",
         "Marry Snomoni",
         "A Smile Worth Thousand Bouquets",
         "10am",
@@ -94,7 +97,7 @@ function genExample() {
     todo4.addTask(task7);
     todo4.addTask(task8);
 
-    todos.push(todo1, todo2, todo3, todo4);
+    todos.push(todo1, todo2, todo3, todo4, todo11);
 
     return todos;
 }
