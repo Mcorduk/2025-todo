@@ -7,7 +7,8 @@ import { taskConst } from "./constants";
 // User can navigate to Todo's from sidebar
 
 class Todo {
-    constructor(name) {
+    constructor(icon, name) {
+        this.icon = icon;
         this.name = name;
         this.tasks = [];
     }
