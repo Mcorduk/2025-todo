@@ -2,10 +2,11 @@ import { Todo } from "./todo";
 import { Task } from "./task";
 import { taskConst } from "./constants";
 
+// FIXME: put tasks and todo's in an object and iterate thru them to create example todo/tasks
 function genExample() {
     let todos = [];
 
-    let todo1 = new Todo("Your Things");
+    let todo1 = new Todo("home", "Home");
     let task1 = new Task(
         "local_cafe",
         "Brewing Coffee",
@@ -34,15 +35,18 @@ function genExample() {
         "low",
     );
     let task4 = new Task(
+        "code",
         "Doing SQL",
         "I am too stupid even for SQL...",
-        null,
+        "8pm",
         null,
         taskConst.STATUS.INCOMPLETE,
         "medium",
     );
 
-    let todo2 = new Todo("Test Todo 2");
+    let todo2 = new Todo("mail", "Post");
+    let todo3 = new Todo("group", "Friends");
+    let todo4 = new Todo("local_cafe", "Coffee");
 
     todo1.addTask(task1);
     todo1.addTask(task2);
@@ -50,18 +54,16 @@ function genExample() {
     todo1.addTask(task3);
     todo2.addTask(task4);
 
-    todos.push(todo1, todo2);
+    todos.push(todo1, todo2, todo3, todo4);
 
     return todos;
 }
 
-function clearEventListenersById(id) {
-    const node = document.getElementById(id);
-
-    node.replaceWith(node.cloneNode(true));
-    const newNode = document.getElementById(id);
+function clearEventListeners(node) {
+    const newNode = node.cloneNode(true);
+    node.replaceWith(newNode);
 
     return newNode;
 }
 
-export { genExample, clearEventListenersById };
+export { genExample, clearEventListeners };
