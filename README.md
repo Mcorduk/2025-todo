@@ -5,13 +5,17 @@ I will be doing both class version and function version.
 TODO:
 Step by Step implementation
 
+- Colors implemented for priority
+- Icons repeat when a task is added
+- AM-PM dropdown for addTaskForm
+- progressing => in progress
 - Make a tab for Todos (make it function)
 - Add localStorage
 
 FIX:
 
-- sidebar breaking on reRender
--
+- Let people slide when 5+ tasks added
+- Add 10 todo limit and show it on sidebar 4/10
 - Form validation for required, max, min
 
 IMPROVE:
