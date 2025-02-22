@@ -13,8 +13,8 @@ class TaskController {
         this._todoController = todoController;
         this._displayController = displayController;
         this._currentIcon = MATERIAL_ICONS[0];
-        this.iconDialog = document.getElementById("iconDialog");
-        this.addTaskDialog = document.getElementById("addTaskDialog");
+        this.iconDialog = document.querySelector("#iconDialog");
+        this.addTaskDialog = document.querySelector("#addTaskDialog");
 
         TaskController.#instance = this;
 
@@ -47,22 +47,22 @@ class TaskController {
         this.setAddTaskDialog();
 
         document
-            .getElementById("showTaskIconList")
+            .querySelector("#showTaskIconList")
             .addEventListener("click", () => this.toggleIconList());
+
+        document
+            .querySelector("#closeAddTaskDialog")
+            .addEventListener("click", () => this.addTaskDialog.close());
 
         this.iconDialog.addEventListener("click", (e) => this.selectIcon(e));
     }
 
     setAddTaskDialog() {
         document
-            .getElementById("showAddTaskDialog")
+            .querySelector("#showAddTaskDialog")
             .addEventListener("click", () => {
-                this.showAddTaskDialog();
+                this.addTaskDialog.showModal();
             });
-
-        document
-            .getElementById("closeAddTaskDialog")
-            .addEventListener("click", () => this.addTaskDialog.close());
 
         const addTaskForm = document.querySelector("#addTaskForm");
         const newForm = clearEventListeners(addTaskForm);
@@ -103,12 +103,8 @@ class TaskController {
         });
     }
 
-    showAddTaskDialog() {
-        this.addTaskDialog.showModal();
-    }
-
     toggleIconList() {
-        let iconDialog = document.getElementById("iconDialog");
+        let iconDialog = document.querySelector("#iconDialog");
 
         if (iconDialog.open) {
             iconDialog.close();
@@ -131,13 +127,13 @@ class TaskController {
     }
 
     changeTaskIcon() {
-        let icon = document.getElementById("showTaskIconList");
+        let icon = document.querySelector("#showTaskIconList");
 
         icon.textContent = this._currentIcon;
     }
 
     sendTaskForm() {
-        const form = document.getElementById("addTaskForm");
+        const form = document.querySelector("#addTaskForm");
         const formData = new FormData(form);
         return formData;
     }
@@ -150,7 +146,7 @@ class TaskController {
         const task = new Task();
 
         // Fetch icon
-        const icon = document.getElementById("showTaskIconList").textContent;
+        const icon = document.querySelector("#showTaskIconList").textContent;
 
         formData.append("icon", icon);
 
@@ -162,11 +158,15 @@ class TaskController {
     }
 
     setCompletedTasks() {
-        const showCompletedBtn = document.getElementById("showCompletedTasks");
-        const completedTasksContainer = document.getElementById(
-            "completedTasksContainer",
+        const showCompletedBtn = document.querySelector("#showCompletedTasks");
+        const completedTaskCount = document.querySelector(
+            "#completedTaskCount",
         );
-        const completedTaskList = document.getElementById("completedTaskList");
+
+        const completedTasksContainer = document.querySelector(
+            "#completedTasksContainer",
+        );
+        const completedTaskList = document.querySelector("#completedTaskList");
 
         if (
             !showCompletedBtn ||
@@ -181,13 +181,15 @@ class TaskController {
             "#showCompletedTasks",
         );
         const newBtn = clearEventListeners(showCompletedTasks);
+        const newCompletedTaskCount = clearEventListeners(completedTaskCount);
+        [newBtn, newCompletedTaskCount].forEach((node) => {
+            node.addEventListener("click", () => {
+                const icon = document.querySelector("span.north");
 
-        newBtn.addEventListener("click", () => {
-            const icon = document.querySelector("span.north");
-
-            completedTasksContainer.classList.toggle("slide-up");
-            completedTaskList.classList.toggle("hidden");
-            icon.classList.toggle("rotated");
+                completedTasksContainer.classList.toggle("slide-up");
+                completedTaskList.classList.toggle("hidden");
+                icon.classList.toggle("rotated");
+            });
         });
     }
 }
