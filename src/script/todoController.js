@@ -1,4 +1,4 @@
-import { genExample } from "./helper";
+import { generateExampleTodos } from "./helper";
 
 class TodoController {
     static #instance = null;
@@ -43,7 +43,7 @@ class TodoController {
         let localStorage = false;
 
         if (!localStorage) {
-            this._todos = genExample();
+            this._todos = generateExampleTodos();
             this.currentTodoIndex = 0;
         }
     }
