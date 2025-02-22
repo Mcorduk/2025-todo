@@ -64,7 +64,7 @@
             <!-- <aside class="sidebar is-closed"> FIXME: uncomment me on prod-->
             <aside class="sidebar montserrat is-closed">
                 <nav>
-                    <div class="todo-count">(4 / 10)</div>
+                    <div class="todo-count"></div>
                 </nav>
 
                 <section id="todoList">
@@ -174,6 +174,59 @@
         <dialog id="iconDialog">
             <div class="dialog">
                 <div id="iconSelection"></div>
+            </div>
+        </dialog>
+
+        <dialog id="addTodoDialog">
+            <div class="dialog">
+                <div class="dialog-header">
+                    <span class="material-symbols-sharp"> west </span>
+                    <h2 class="montserrat flex-1">Add a New Todo</h2>
+                </div>
+                <div class="dialog-body open-sans">
+                    <form id="addTodoForm">
+                        <div class="task-icon">
+                            <span
+                                id="showTodoIconList"
+                                class="material-symbols-sharp blue-icon"
+                            >
+                                add
+                            </span>
+                            <span
+                                class="material-symbols-sharp change-icon"
+                                id="changeIcon"
+                                style="display: none"
+                                >add</span
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Title</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="Enter title"
+                            />
+                        </div>
+
+                        <div class="dialog-footer open-sans">
+                            <button
+                                id="closeAddTodoDialog"
+                                type="reset"
+                                class="cancel-btn"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                id="sendTodoForm"
+                                class="save-btn"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </dialog>
     </body>
