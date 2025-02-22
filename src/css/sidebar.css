@@ -36,12 +36,23 @@
     }
 
     nav {
-        height: 100px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: end;
+        height: 50px;
+
+        .todo-count {
+            padding: 0 20px 0 0;
+            font-size: 16px;
+            font-weight: 400;
+        }
     }
 
     #todoList {
         display: flex;
         flex-direction: column;
+        padding-top: 50px;
         gap: 15px;
 
         .todo {

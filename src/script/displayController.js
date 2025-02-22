@@ -184,6 +184,16 @@ class DisplayController {
         return todoHtml;
     }
 
+    renderSidebarNav() {
+        const todoCount = this.todoController.todos.length;
+
+        const countContainer = document.querySelector(".todo-count");
+
+        countContainer.textContent = `
+        (${todoCount} / 10)
+        `;
+    }
+
     renderSidebarTodos() {
         const todoList = document.querySelector("#todoList");
         todoList.innerHTML = "";
