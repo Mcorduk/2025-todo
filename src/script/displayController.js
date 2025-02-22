@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { MATERIAL_ICONS, taskConst } from "./constants";
 import { clearEventListeners } from "./helper";
-import { TaskController } from "./taskController";
+import { EventController } from "./eventController";
 
 class DisplayController {
     static #instance = null;
@@ -166,6 +166,7 @@ class DisplayController {
     }
 
     renderSidebar() {
+        this.renderSidebarNav();
         this.renderSidebarTodos();
     }
 
@@ -196,6 +197,7 @@ class DisplayController {
 
     renderSidebarTodos() {
         const todoList = document.querySelector("#todoList");
+
         todoList.innerHTML = "";
 
         let todoIndex = 0;
@@ -205,6 +207,18 @@ class DisplayController {
 
             todoIndex++;
         }
+
+        todoList.innerHTML += this.genSidebarAddTodo();
+    }
+
+    genSidebarAddTodo() {
+        const addTodoHtml = `
+        <button id="addTodo">
+                    <span class="material-symbols-sharp"> add </span>
+                </button>
+        `;
+
+        return addTodoHtml;
     }
 
     renderIconSelect() {
@@ -242,7 +256,7 @@ class DisplayController {
 
                 this.renderTodo(); //render
 
-                TaskController.instance.setToggleTaskStatus();
+                EventController.instance.setToggleTaskStatus();
             });
         });
     }

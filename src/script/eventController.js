@@ -2,21 +2,19 @@ import { MATERIAL_ICONS } from "./constants";
 import { Task } from "./task";
 import { clearEventListeners } from "./helper";
 
-class TaskController {
+class EventController {
     static #instance = null;
 
     constructor(todoController, displayController) {
-        if (TaskController.#instance) {
-            return TaskController.#instance;
+        if (EventController.#instance) {
+            return EventController.#instance;
         }
 
         this._todoController = todoController;
         this._displayController = displayController;
         this._currentIcon = MATERIAL_ICONS[0];
-        this.iconDialog = document.querySelector("#iconDialog");
-        this.addTaskDialog = document.querySelector("#addTaskDialog");
 
-        TaskController.#instance = this;
+        EventController.#instance = this;
 
         this.setEventListeners();
     }
@@ -45,16 +43,30 @@ class TaskController {
 
         // Add a New Task Form Dialog
         this.setAddTaskDialog();
+        this.setAddTodoDialog();
 
         document
             .querySelector("#showTaskIconList")
             .addEventListener("click", () => this.toggleIconList());
+
+        const showTodo = document.querySelector("#showTodoIconList");
+        const newTodo = clearEventListeners(showTodo);
+        newTodo.addEventListener("click", () => this.toggleIconList());
 
         document
             .querySelector("#closeAddTaskDialog")
             .addEventListener("click", () => this.addTaskDialog.close());
 
         this.iconDialog.addEventListener("click", (e) => this.selectIcon(e));
+    }
+
+    setAddTodoDialog() {
+        const button = document.querySelector("#addTodo");
+        const addTodoDialog = document.querySelector("#addTodoDialog");
+
+        button.addEventListener("click", () => {
+            addTodoDialog.showModal();
+        });
     }
 
     setAddTaskDialog() {
@@ -64,8 +76,7 @@ class TaskController {
                 this.addTaskDialog.showModal();
             });
 
-        const addTaskForm = document.querySelector("#addTaskForm");
-        const newForm = clearEventListeners(addTaskForm);
+        const newForm = clearEventListeners(this.addTaskForm);
         newForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const formData = this.sendTaskForm();
@@ -127,14 +138,20 @@ class TaskController {
     }
 
     changeTaskIcon() {
-        let icon = document.querySelector("#showTaskIconList");
+        //Need to know if we are changing todo or task form icon
+        let icon;
+        if (this.addTaskDialog.open) {
+            icon = document.querySelector("#showTaskIconList");
+        } else if (this.addTodoDialog.open) {
+            icon = document.querySelector("#showTodoIconList");
+        }
 
         icon.textContent = this._currentIcon;
     }
 
     sendTaskForm() {
-        const form = document.querySelector("#addTaskForm");
-        const formData = new FormData(form);
+        const formData = new FormData(this.addTaskForm);
+
         return formData;
     }
 
@@ -194,4 +211,4 @@ class TaskController {
     }
 }
 
-export { TaskController };
+export { EventController };

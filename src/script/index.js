@@ -2,7 +2,7 @@ import "../css/main.css";
 
 import { TodoController } from "./todoController";
 import { DisplayController } from "./displayController";
-import { TaskController } from "./taskController";
+import { EventController } from "./eventController";
 
 const todoController = new TodoController();
 todoController.initialize();
@@ -10,9 +10,9 @@ todoController.initialize();
 const displayController = new DisplayController(todoController);
 displayController.renderTodo();
 
-const taskController = new TaskController(todoController, displayController);
+const eventController = new EventController(todoController, displayController);
 
-taskController.setEventListeners();
+eventController.setEventListeners();
 
 // make hamburger button active
 //
