@@ -1,5 +1,3 @@
-"use strict";
-
 import { format } from "date-fns";
 import { MATERIAL_ICONS, taskConst } from "./constants";
 import { clearEventListeners } from "./helper";

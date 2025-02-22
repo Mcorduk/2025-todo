@@ -1,5 +1,3 @@
-"use strict";
-
 import "../css/main.css";
 
 import { TodoController } from "./todoController";

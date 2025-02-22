@@ -1,5 +1,3 @@
-"use strict";
-
 import { taskConst } from "./constants";
 import { parse, format } from "date-fns";
 

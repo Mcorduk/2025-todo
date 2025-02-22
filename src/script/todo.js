@@ -1,10 +1,4 @@
-"use strict";
-
 import { taskConst } from "./constants";
-
-// TODO: Enable a seperate Todo List
-// User can add or delete Todo List Separate from the default one
-// User can navigate to Todo's from sidebar
 
 class Todo {
     constructor(icon, name) {
