@@ -4,6 +4,9 @@
 
     #taskList {
         padding: 20px;
+        padding-bottom: 100px;
+        max-height: 400px;
+        overflow: auto;
     }
 
     .task {
@@ -42,12 +45,7 @@
 }
 
 #completedTasksContainer {
-    #completedTaskCount {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-
+    nav {
         p {
             font-size: 0.8rem;
             font-weight: 600;
@@ -63,6 +61,18 @@
                 text-align: center;
             }
         }
+
+        #completedTaskCount {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+    }
+
+    #completedTaskList {
+        max-height: 400px;
+        overflow: auto;
     }
 }
 
