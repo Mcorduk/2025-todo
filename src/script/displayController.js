@@ -148,16 +148,31 @@ class DisplayController {
     }
 
     renderTask(status) {
+        let todo = this.todoController.currentTodo;
+
+        const taskCount = todo.getTaskCount("status", status);
+
         let taskList;
         if (status === taskConst.STATUS.INCOMPLETE) {
             taskList = document.querySelector("#taskList");
+
+            if (taskCount === 0) {
+                taskList.innerHTML = `<p class="open-sans default-text dark-gray">No Active Tasks</p>`;
+                return;
+            }
         } else if (status === taskConst.STATUS.COMPLETE) {
             taskList = document.querySelector("#completedTaskList");
+
+            if (taskCount === 0) {
+                taskList.innerHTML = `<p class="open-sans default-text dark-gray">No Completed Tasks</p>`;
+                return;
+            }
         }
         taskList.innerHTML = "";
 
         let taskIndex = 0;
-        for (let task of this.todoController.currentTodo.tasks) {
+
+        for (let task of todo.tasks) {
             const taskHtml = this.generateTask(taskIndex, task, status);
             taskList.innerHTML += taskHtml;
 
