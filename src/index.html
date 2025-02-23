@@ -70,6 +70,11 @@
                 <section id="todoList">
                     <!-- Keep todo index on each todo -->
                 </section>
+                <footer>
+                    <button id="showAddTodoDialog">
+                        <span class="material-symbols-sharp"> add </span>
+                    </button>
+                </footer>
             </aside>
         </div>
 
@@ -180,8 +185,11 @@
         <dialog id="addTodoDialog">
             <div class="dialog">
                 <div class="dialog-header">
-                    <span class="material-symbols-sharp"> west </span>
-                    <h2 class="montserrat flex-1">Add a New Todo</h2>
+                    <button type="reset">
+                        <span class="material-symbols-sharp"> west </span>
+                    </button>
+                    <h2 class="montserrat">Add a New Todo</h2>
+                    <div></div>
                 </div>
                 <div class="dialog-body open-sans">
                     <form id="addTodoForm">

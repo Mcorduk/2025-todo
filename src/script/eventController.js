@@ -23,7 +23,7 @@ class EventController {
 
         EventController.#instance = this;
 
-        this.setEventListeners();
+        this.initializeEventListeners();
     }
 
     static get instance() {
@@ -42,7 +42,7 @@ class EventController {
         return this._currentIcon;
     }
 
-    setEventListeners() {
+    initializeEventListeners() {
         // Task Completion Button on Hover over
         this.setToggleTaskStatus();
 
@@ -76,33 +76,37 @@ class EventController {
                 this.addTaskDialog.showModal();
             });
 
-        const newForm = clearEventListeners(this.addTaskForm);
-        newForm.addEventListener("submit", (e) => {
+        this.addTaskForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const formData = this.sendTaskForm();
             const newTask = this.createFromForm(formData, "task");
 
-            // get this added to current Todo's task list
             const currentTodo = this.todoController.currentTodo;
             currentTodo.tasks = [...currentTodo.tasks, newTask];
 
             this.displayController.renderTodo(); //render
             this.setToggleTaskStatus(); //re-attach event listeners
 
+            this.addTaskForm.reset();
             this.addTaskDialog.close();
         });
     }
-
     setAddTodoDialog() {
+        document
+            .querySelector("#addTodoDialog .dialog-header>button")
+            .addEventListener("click", () => {
+                this.addTodoDialog.close();
+            });
+
         document
             .querySelector("#showAddTodoDialog")
             .addEventListener("click", () => {
                 this.addTodoDialog.showModal();
             });
 
-        const newForm = clearEventListeners(this.addTodoForm);
-        newForm.addEventListener("submit", (e) => {
+        this.addTodoForm.addEventListener("submit", (e) => {
             e.preventDefault();
+
             const formData = this.sendTodoForm();
             const newTodo = this.createFromForm(formData, "todo");
 
@@ -111,6 +115,7 @@ class EventController {
             this.displayController.renderSidebar();
             this.displayController.setRenderSidebarTodos();
 
+            this.addTodoForm.reset();
             this.addTodoDialog.close();
         });
     }

@@ -73,6 +73,18 @@
     }
 }
 
+aside > footer {
+    padding: 10px;
+
+    button {
+        width: 100%;
+    }
+}
+
+#addTodoDialog .dialog-header {
+    justify-content: space-between;
+}
+
 /* Animation for ShowTodos svg.ham */
 .black {
     filter: invert(100%);

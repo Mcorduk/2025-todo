@@ -207,18 +207,6 @@ class DisplayController {
 
             todoIndex++;
         }
-
-        todoList.innerHTML += this.genSidebarAddTodo();
-    }
-
-    genSidebarAddTodo() {
-        const addTodoHtml = `
-        <button id="showAddTodoDialog">
-                    <span class="material-symbols-sharp"> add </span>
-                </button>
-        `;
-
-        return addTodoHtml;
     }
 
     renderIconSelect() {
