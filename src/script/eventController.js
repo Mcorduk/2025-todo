@@ -71,6 +71,12 @@ class EventController {
 
     setAddTaskDialog() {
         document
+            .querySelector("#addTaskDialog .dialog-header>button")
+            .addEventListener("click", () => {
+                this.addTaskDialog.close();
+            });
+
+        document
             .querySelector("#showAddTaskDialog")
             .addEventListener("click", () => {
                 this.addTaskDialog.showModal();
