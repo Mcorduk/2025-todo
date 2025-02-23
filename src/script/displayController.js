@@ -18,13 +18,13 @@ class DisplayController {
         this.renderBody();
         this.renderSidebar();
         this.setRenderSidebarTodos();
+        this.renderIconSelect();
     }
 
     renderTodo() {
         this.renderNav();
         this.renderBody();
         this.renderFooter();
-        this.renderIconSelect();
     }
 
     renderNav() {
