@@ -109,8 +109,14 @@ class EventController {
 
             const formData = this.sendTodoForm();
             const newTodo = this.createFromForm(formData, "todo");
-
-            this._todoController.todos.push(newTodo);
+            let todoList = this._todoController.todos;
+            if (todoList.length >= 10) {
+                alert("Max of 10 Todos can be added.");
+                this.addTodoForm.reset();
+                this.addTodoDialog.close();
+                return;
+            }
+            todoList.push(newTodo);
 
             this.displayController.renderSidebar();
             this.displayController.setRenderSidebarTodos();
