@@ -213,7 +213,7 @@ class DisplayController {
 
     genSidebarAddTodo() {
         const addTodoHtml = `
-        <button id="addTodo">
+        <button id="showAddTodoDialog">
                     <span class="material-symbols-sharp"> add </span>
                 </button>
         `;

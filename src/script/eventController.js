@@ -1,5 +1,6 @@
 import { MATERIAL_ICONS } from "./constants";
 import { Task } from "./task";
+import { Todo } from "./todo";
 import { clearEventListeners } from "./helper";
 
 class EventController {
@@ -13,6 +14,12 @@ class EventController {
         this._todoController = todoController;
         this._displayController = displayController;
         this._currentIcon = MATERIAL_ICONS[0];
+
+        this.iconDialog = document.querySelector("#iconDialog");
+        this.addTaskDialog = document.querySelector("#addTaskDialog");
+        this.addTaskForm = document.querySelector("#addTaskForm");
+        this.addTodoDialog = document.querySelector("#addTodoDialog");
+        this.addTodoForm = document.querySelector("#addTodoForm");
 
         EventController.#instance = this;
 
@@ -41,7 +48,6 @@ class EventController {
 
         this.setCompletedTasks();
 
-        // Add a New Task Form Dialog
         this.setAddTaskDialog();
         this.setAddTodoDialog();
 
@@ -56,17 +62,11 @@ class EventController {
         document
             .querySelector("#closeAddTaskDialog")
             .addEventListener("click", () => this.addTaskDialog.close());
+        document
+            .querySelector("#closeAddTodoDialog")
+            .addEventListener("click", () => this.addTodoDialog.close());
 
         this.iconDialog.addEventListener("click", (e) => this.selectIcon(e));
-    }
-
-    setAddTodoDialog() {
-        const button = document.querySelector("#addTodo");
-        const addTodoDialog = document.querySelector("#addTodoDialog");
-
-        button.addEventListener("click", () => {
-            addTodoDialog.showModal();
-        });
     }
 
     setAddTaskDialog() {
@@ -80,7 +80,7 @@ class EventController {
         newForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const formData = this.sendTaskForm();
-            const newTask = this.createTaskFromForm(formData);
+            const newTask = this.createFromForm(formData, "task");
 
             // get this added to current Todo's task list
             const currentTodo = this.todoController.currentTodo;
@@ -90,6 +90,28 @@ class EventController {
             this.setToggleTaskStatus(); //re-attach event listeners
 
             this.addTaskDialog.close();
+        });
+    }
+
+    setAddTodoDialog() {
+        document
+            .querySelector("#showAddTodoDialog")
+            .addEventListener("click", () => {
+                this.addTodoDialog.showModal();
+            });
+
+        const newForm = clearEventListeners(this.addTodoForm);
+        newForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const formData = this.sendTodoForm();
+            const newTodo = this.createFromForm(formData, "todo");
+
+            this._todoController.todos.push(newTodo);
+
+            this.displayController.renderSidebar();
+            this.displayController.setRenderSidebarTodos();
+
+            this.addTodoDialog.close();
         });
     }
 
@@ -155,23 +177,35 @@ class EventController {
         return formData;
     }
 
-    createTaskFromForm(formData) {
+    sendTodoForm() {
+        const formData = new FormData(this.addTodoForm);
+
+        return formData;
+    }
+
+    createFromForm(formData, type = "task") {
         if (!formData) {
             throw new Error("Form data is corrupted");
         }
 
-        const task = new Task();
+        let element;
+        let icon;
 
-        // Fetch icon
-        const icon = document.querySelector("#showTaskIconList").textContent;
+        if (type === "task") {
+            element = new Task();
+            icon = document.querySelector("#showTaskIconList").textContent;
+        } else if (type === "todo") {
+            icon = document.querySelector("#showTodoIconList").textContent;
+            element = new Todo();
+        }
 
         formData.append("icon", icon);
 
         for (let [key, value] of formData.entries()) {
-            task[key] = value;
+            element[key] = value;
         }
 
-        return task;
+        return element;
     }
 
     setCompletedTasks() {
