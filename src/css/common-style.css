@@ -86,6 +86,14 @@ hr {
     color: #2db7e5;
 }
 
+.orange-icon {
+    color: orange;
+}
+
+.red-icon {
+    color: orangered;
+}
+
 .dialog {
     position: absolute;
     top: 50%;

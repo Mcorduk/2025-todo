@@ -141,6 +141,11 @@ class DisplayController {
                                 ${isTaskComplete() ? "undo" : "check"}
                             </span>
                     </button>
+                    <button data-task-index="${taskIndex}" class="btn-floating red hover-button delete-task">
+                        <span class="material-symbols-sharp">
+                               delete
+                            </span>
+                    </button>
                 </div>
                 <hr>
         `;
@@ -227,25 +232,30 @@ class DisplayController {
 
     genPriorityIcon(priority) {
         let icon;
+        let color;
         switch (priority) {
             case taskConst.PRIORITY.LOW:
                 icon = "signal_cellular_alt_1_bar";
+                color = "light-blue";
                 break;
             case taskConst.PRIORITY.MEDIUM:
                 icon = "signal_cellular_alt_2_bar";
+                color = "blue";
                 break;
             case taskConst.PRIORITY.HIGH:
                 icon = "signal_cellular_alt";
+                color = "orange";
                 break;
             case taskConst.PRIORITY.EXTREME:
                 icon = "signal_cellular_connected_no_internet_4_bar";
+                color = "red";
                 break;
             default:
                 throw new Error("Priority icon not found");
         }
 
         const iconHtml = `
-        <div class="tooltip"><span class="material-symbols-sharp light-blue-icon">${icon}</span>
+        <div class="tooltip"><span class="material-symbols-sharp ${color}-icon">${icon}</span>
            <span class="tooltiptext capitalize">${capitalizeFirstLetter(priority) + " Priority"}</span></div>
         `;
         return iconHtml;
