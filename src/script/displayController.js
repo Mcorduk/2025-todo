@@ -1,7 +1,5 @@
 import { format } from "date-fns";
 import { MATERIAL_ICONS, taskConst } from "./constants";
-import { clearEventListeners } from "./helper";
-import { EventController } from "./eventController";
 
 class DisplayController {
     static #instance = null;
@@ -17,7 +15,6 @@ class DisplayController {
 
         this.renderBody();
         this.renderSidebar();
-        this.setRenderSidebarTodos();
         this.renderIconSelect();
     }
 
@@ -234,34 +231,6 @@ class DisplayController {
 
             div.innerHTML += iconHtml;
         }
-    }
-
-    setRenderSidebarTodos() {
-        const app = document.querySelector("#app");
-
-        const todos = document.querySelectorAll(".todo");
-
-        todos.forEach((todoNode) => {
-            const todo = clearEventListeners(todoNode);
-
-            todo.addEventListener("click", () => {
-                const todoIndex = todo.dataset.todoIndex;
-                app.dataset.todoIndex = todoIndex;
-
-                const sidebar = document.querySelector(".sidebar");
-                sidebar.classList.toggle("is-closed");
-
-                const hambButton = document.querySelector(".hamb");
-                hambButton.classList.toggle("active");
-
-                const svg = document.querySelector(".hamb > svg.ham");
-                svg.classList.toggle("black");
-
-                this.renderTodo(); //render
-
-                EventController.instance.setToggleTaskStatus();
-            });
-        });
     }
 }
 
