@@ -8,10 +8,7 @@ Step by Step implementation
 
 ## Functionality
 
-- Colors implemented for priority
-- AM-PM dropdown for addTaskForm
 - Add localStorage => remember tasks, remember the last task that was open (#app data-todo-index)
-- Form Validation
 
 ## Style
 
@@ -23,15 +20,15 @@ Step by Step implementation
 # FIX:
 
 - Mobile doesn't have hover over therefore can't interact with tasks and todos, what do?
-- Task Text Overflow, Tasks Header and Desc should end with "..."
-- Todo Text Overflow, Todo headers should have a max limit AND text size should be dynamically smaller
 - Functions are impure, get's repeated on strict mode
-- when time is empty its undefined
 
 # IMPROVE:
 
 - Can make a todo for past dates and times?
 - Load the last seen todo when visiting site again
-- If No Task "No task here yet"
 - If No Todo, a greyed out icon to indicate emptiness
 - Dark Mode
+- Task Text Overflow, Tasks Header and Desc should end with "..."
+- Todo Text Overflow, Todo headers should have a max limit AND text size should be dynamically smaller
+
+1- Plus to check

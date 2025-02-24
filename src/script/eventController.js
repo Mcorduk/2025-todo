@@ -268,6 +268,7 @@ class EventController {
                 const todoIndex = todo.dataset.todoIndex;
                 app.dataset.todoIndex = todoIndex;
 
+                this.toggleSidebar();
                 this.displayController.renderTodo();
                 this.setToggleTaskStatus();
             });
@@ -283,6 +284,9 @@ class EventController {
                 }
             });
         });
+
+        //trying to make sidebar close when open and outside is clicked
+
         // const app = document.querySelector("#app");
         // app.addEventListener("click", (event) => {
         //     const sidebar = document.querySelector("aside");
@@ -294,18 +298,22 @@ class EventController {
         // });
     }
 
-    toggleSidebar(type) {
+    toggleSidebar() {
         let sidebar = document.querySelector(".sidebar");
         let hambButton = document.querySelector(".hamb");
         let svg = document.querySelector(".hamb > svg.ham");
 
-        const isClosed =
-            type === "close" ||
-            (type !== "open" && sidebar.classList.contains("is-closed"));
+        // const isClosed =
+        //     type === "close" ||
+        //     (type !== "open" && sidebar.classList.contains("is-closed"));
 
-        sidebar.classList.toggle("is-closed", isClosed);
-        hambButton.classList.toggle("active", !isClosed);
-        svg.classList.toggle("black", !isClosed);
+        // sidebar.classList.toggle("is-closed", isClosed);
+        // hambButton.classList.toggle("active", !isClosed);
+        // svg.classList.toggle("black", !isClosed);
+
+        sidebar.classList.toggle("is-closed");
+        hambButton.classList.toggle("active");
+        svg.classList.toggle("black");
     }
 }
 
