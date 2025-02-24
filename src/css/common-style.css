@@ -82,6 +82,10 @@ hr {
     color: blue;
 }
 
+.light-blue-icon {
+    color: #2db7e5;
+}
+
 .dialog {
     position: absolute;
     top: 50%;
