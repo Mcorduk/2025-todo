@@ -26,6 +26,7 @@ function generateExampleTodos() {
     return exampleTodos;
 }
 
+// FIXME: this function is a bandaid, event listeners shouldnt be added twice anyways
 function clearEventListeners(node) {
     const newNode = node.cloneNode(true);
     node.replaceWith(newNode);
@@ -33,4 +34,8 @@ function clearEventListeners(node) {
     return newNode;
 }
 
-export { generateExampleTodos, clearEventListeners };
+function capitalizeFirstLetter(val) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+}
+
+export { generateExampleTodos, clearEventListeners, capitalizeFirstLetter };

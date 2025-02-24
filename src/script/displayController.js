@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { MATERIAL_ICONS, taskConst } from "./constants";
-
+import { capitalizeFirstLetter } from "./helper";
 class DisplayController {
     static #instance = null;
 
@@ -87,8 +87,8 @@ class DisplayController {
     }
 
     renderBody() {
-        this.renderTask(taskConst.STATUS.COMPLETE);
-        this.renderTask(taskConst.STATUS.INCOMPLETE);
+        this.renderTasks(taskConst.STATUS.COMPLETE);
+        this.renderTasks(taskConst.STATUS.INCOMPLETE);
     }
 
     renderFooter() {
@@ -110,9 +110,10 @@ class DisplayController {
 
         const taskIndex = index;
         const taskIcon = task.icon;
-        const taskDescription = task.description;
         const taskTitle = task.name;
+        const taskDescription = task.description;
         const taskTime = task.time;
+        const taskPriority = task.priority;
 
         function isTaskComplete() {
             return statusValue === taskConst.STATUS.COMPLETE;
@@ -131,9 +132,12 @@ class DisplayController {
                             <div id="taskDescription" class="dark-gray open-sans">${taskDescription}</div>
                         </div>
                     </div>
-                    <div id="taskTime" class="dark-gray montserrat">${taskTime}</div>
+                    <div>
+                        <div  class="dark-gray montserrat priority">${this.genPriorityIcon(taskPriority)}</div>
+                        <div id="taskTime" class="dark-gray montserrat">${taskTime}</div>
+                    </div>
                     <button data-task-index="${taskIndex}" class="btn-floating green hover-button complete-task">
-                        <span class="material-symbols-sharp blue-icon">
+                        <span class="material-symbols-sharp">
                                 ${isTaskComplete() ? "undo" : "check"}
                             </span>
                     </button>
@@ -144,7 +148,7 @@ class DisplayController {
         return taskHtml;
     }
 
-    renderTask(status) {
+    renderTasks(status) {
         let todo = this.todoController.currentTodo;
 
         const taskCount = todo.getTaskCount("status", status);
@@ -219,6 +223,32 @@ class DisplayController {
 
             todoIndex++;
         }
+    }
+
+    genPriorityIcon(priority) {
+        let icon;
+        switch (priority) {
+            case taskConst.PRIORITY.LOW:
+                icon = "signal_cellular_alt_1_bar";
+                break;
+            case taskConst.PRIORITY.MEDIUM:
+                icon = "signal_cellular_alt_2_bar";
+                break;
+            case taskConst.PRIORITY.HIGH:
+                icon = "signal_cellular_alt";
+                break;
+            case taskConst.PRIORITY.EXTREME:
+                icon = "signal_cellular_connected_no_internet_4_bar";
+                break;
+            default:
+                throw new Error("Priority icon not found");
+        }
+
+        const iconHtml = `
+        <div class="tooltip"><span class="material-symbols-sharp light-blue-icon">${icon}</span>
+           <span class="tooltiptext capitalize">${capitalizeFirstLetter(priority) + " Priority"}</span></div>
+        `;
+        return iconHtml;
     }
 
     renderIconSelect() {
