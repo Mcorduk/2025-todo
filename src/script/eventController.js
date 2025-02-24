@@ -153,15 +153,24 @@ class EventController {
 
     selectIcon(event) {
         if (event.target.tagName === "SPAN") {
-            this._currentIcon = event.target;
-
             let icon = this.getFormIcon();
 
-            icon.textContent = this._currentIcon;
+            icon.textContent = event.target.textContent;
             icon.classList.add("selected");
 
             this.iconDialog.close();
         }
+    }
+
+    getFormIcon() {
+        let icon;
+        if (this.addTaskDialog.open) {
+            icon = document.querySelector("#showTaskIconList");
+        } else if (this.addTodoDialog.open) {
+            icon = document.querySelector("#showTodoIconList");
+        }
+
+        return icon;
     }
 
     sendTaskForm() {
@@ -199,17 +208,6 @@ class EventController {
         }
 
         return element;
-    }
-
-    getFormIcon() {
-        let icon;
-        if (this.addTaskDialog.open) {
-            icon = document.querySelector("#showTaskIconList");
-        } else if (this.addTodoDialog.open) {
-            icon = document.querySelector("#showTodoIconList");
-        }
-
-        return icon;
     }
 
     setIconListToggle() {

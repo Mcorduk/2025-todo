@@ -15,6 +15,16 @@ class TodoController {
         TodoController.#instance = this;
     }
 
+    initialize() {
+        // checkLocalStorage for todos
+        let localStorage = false;
+
+        if (!localStorage) {
+            this._todos = generateExampleTodos();
+            this.currentTodoIndex = 0;
+        }
+    }
+
     get todos() {
         return this._todos;
     }
@@ -36,16 +46,6 @@ class TodoController {
         app.setAttribute("data-todo-index", index);
 
         this._currentTodoIndex = index;
-    }
-
-    initialize() {
-        // checkLocalStorage for todos
-        let localStorage = false;
-
-        if (!localStorage) {
-            this._todos = generateExampleTodos();
-            this.currentTodoIndex = 0;
-        }
     }
 
     addTodo(todo) {
