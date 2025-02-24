@@ -7,6 +7,10 @@ class Todo {
         this.tasks = [];
     }
 
+    getTask(index) {
+        return this.tasks[index];
+    }
+
     addTask(task) {
         return this.tasks.push(task);
     }
@@ -36,10 +40,6 @@ class Todo {
         }
 
         return count;
-    }
-
-    getTask(index) {
-        return this.tasks[index];
     }
 }
 

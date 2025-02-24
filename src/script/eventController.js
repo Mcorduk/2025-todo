@@ -1,4 +1,3 @@
-import { MATERIAL_ICONS } from "./constants";
 import { Task } from "./task";
 import { Todo } from "./todo";
 import { clearEventListeners } from "./helper";
@@ -13,7 +12,6 @@ class EventController {
 
         this._todoController = todoController;
         this._displayController = displayController;
-        this._currentIcon = MATERIAL_ICONS[0];
 
         this.iconDialog = document.querySelector("#iconDialog");
         this.addTaskDialog = document.querySelector("#addTaskDialog");
@@ -38,35 +36,19 @@ class EventController {
         return this._displayController;
     }
 
-    get currentIcon() {
-        return this._currentIcon;
-    }
-
     initializeEventListeners() {
-        // Task Completion Button on Hover over
+        this.setSidebarTodos();
         this.setToggleTaskStatus();
 
         this.setCompletedTasks();
 
         this.setAddTaskDialog();
         this.setAddTodoDialog();
-
-        document
-            .querySelector("#showTaskIconList")
-            .addEventListener("click", () => this.toggleIconList());
-
-        const showTodo = document.querySelector("#showTodoIconList");
-        const newTodo = clearEventListeners(showTodo);
-        newTodo.addEventListener("click", () => this.toggleIconList());
-
-        document
-            .querySelector("#closeAddTaskDialog")
-            .addEventListener("click", () => this.addTaskDialog.close());
-        document
-            .querySelector("#closeAddTodoDialog")
-            .addEventListener("click", () => this.addTodoDialog.close());
+        this.setIconListToggle();
 
         this.iconDialog.addEventListener("click", (e) => this.selectIcon(e));
+
+        this.handleOutsideClick();
     }
 
     setAddTaskDialog() {
@@ -75,6 +57,9 @@ class EventController {
             .addEventListener("click", () => {
                 this.addTaskDialog.close();
             });
+        document
+            .querySelector("#closeAddTaskDialog")
+            .addEventListener("click", () => this.addTaskDialog.close());
 
         document
             .querySelector("#showAddTaskDialog")
@@ -104,6 +89,9 @@ class EventController {
                 this.addTodoDialog.close();
             });
 
+        document
+            .querySelector("#closeAddTodoDialog")
+            .addEventListener("click", () => this.addTodoDialog.close());
         document
             .querySelector("#showAddTodoDialog")
             .addEventListener("click", () => {
@@ -164,28 +152,16 @@ class EventController {
     }
 
     selectIcon(event) {
-        if (event.targetid !== "iconDialog") {
-            this.iconDialog.close();
-        }
-
         if (event.target.tagName === "SPAN") {
-            this._currentIcon = event.target.textContent;
-            console.log("Selected Icon:", this._currentIcon);
-            this.changeTaskIcon();
+            this._currentIcon = event.target;
+
+            let icon = this.getFormIcon();
+
+            icon.textContent = this._currentIcon;
+            icon.classList.add("selected");
+
             this.iconDialog.close();
         }
-    }
-
-    changeTaskIcon() {
-        //Need to know if we are changing todo or task form icon
-        let icon;
-        if (this.addTaskDialog.open) {
-            icon = document.querySelector("#showTaskIconList");
-        } else if (this.addTodoDialog.open) {
-            icon = document.querySelector("#showTodoIconList");
-        }
-
-        icon.textContent = this._currentIcon;
     }
 
     sendTaskForm() {
@@ -225,6 +201,27 @@ class EventController {
         return element;
     }
 
+    getFormIcon() {
+        let icon;
+        if (this.addTaskDialog.open) {
+            icon = document.querySelector("#showTaskIconList");
+        } else if (this.addTodoDialog.open) {
+            icon = document.querySelector("#showTodoIconList");
+        }
+
+        return icon;
+    }
+
+    setIconListToggle() {
+        document
+            .querySelector("#showTaskIconList")
+            .addEventListener("click", () => this.toggleIconList());
+
+        document
+            .querySelector("#showTodoIconList")
+            .addEventListener("click", () => this.toggleIconList());
+    }
+
     setCompletedTasks() {
         const showCompletedBtn = document.querySelector("#showCompletedTasks");
         const completedTaskCount = document.querySelector(
@@ -259,6 +256,58 @@ class EventController {
                 icon.classList.toggle("rotated");
             });
         });
+    }
+
+    setSidebarTodos() {
+        const app = document.querySelector("#app");
+
+        const todos = document.querySelectorAll(".todo");
+
+        todos.forEach((todoNode) => {
+            const todo = clearEventListeners(todoNode);
+
+            todo.addEventListener("click", () => {
+                const todoIndex = todo.dataset.todoIndex;
+                app.dataset.todoIndex = todoIndex;
+
+                this.displayController.renderTodo();
+                this.setToggleTaskStatus();
+            });
+        });
+    }
+
+    handleOutsideClick() {
+        //dialogs
+        document.querySelectorAll("dialog").forEach((dialog) => {
+            dialog.addEventListener("click", (event) => {
+                if (event.target === dialog) {
+                    dialog.close();
+                }
+            });
+        });
+        // const app = document.querySelector("#app");
+        // app.addEventListener("click", (event) => {
+        //     const sidebar = document.querySelector("aside");
+
+        //     if (!sidebar.contains(event.target)) {
+        //         console.log("Clicked outside the sidebar!");
+        //         this.toggleSidebar("close");
+        //     }
+        // });
+    }
+
+    toggleSidebar(type) {
+        let sidebar = document.querySelector(".sidebar");
+        let hambButton = document.querySelector(".hamb");
+        let svg = document.querySelector(".hamb > svg.ham");
+
+        const isClosed =
+            type === "close" ||
+            (type !== "open" && sidebar.classList.contains("is-closed"));
+
+        sidebar.classList.toggle("is-closed", isClosed);
+        hambButton.classList.toggle("active", !isClosed);
+        svg.classList.toggle("black", !isClosed);
     }
 }
 
