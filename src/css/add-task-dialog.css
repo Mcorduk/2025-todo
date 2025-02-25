@@ -1,18 +1,21 @@
 #addTaskDialog,
+#editTaskDialog,
 #addTodoDialog,
-#editTaskDialog {
+#deleteTodoDialog {
     background: none;
     border: 0;
 }
 
-#addTodoDialog {
+#addTodoDialog,
+#deleteTodoDialog {
     width: 100%;
     height: 100%;
 }
 
 #addTaskDialog > div,
+#editTaskDialog > div,
 #addTodoDialog > div,
-#editTaskDialog > div {
+#deleteTodoDialog > div {
     display: flex;
     flex-direction: column;
     min-width: 360px;
@@ -160,4 +163,23 @@
 
 .save-btn:hover {
     background-color: #0077cc;
+}
+
+#deleteTodoDialog {
+    & > .dialog {
+        min-width: 240px;
+
+        .dialog-header > button {
+            margin-left: -20px;
+        }
+        #deleteTodoForm {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            #todo {
+                margin-bottom: 20px;
+            }
+        }
+    }
 }

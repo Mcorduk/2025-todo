@@ -77,11 +77,12 @@ aside > footer {
     display: flex;
     justify-content: center;
     padding: 10px;
+    gap: 10px;
 
     button {
         width: 75%;
         align-items: center;
-        background: #f5f5fa;
+        background: rgba(245, 245, 250, 0.1);
         border-width: 1px;
         border-radius: 10%;
         box-shadow:
