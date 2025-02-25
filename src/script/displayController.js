@@ -107,7 +107,6 @@ class DisplayController {
         if (!(task.status === statusValue)) {
             return "";
         }
-
         const taskIndex = index;
         const taskIcon = task.icon;
         const taskTitle = task.name;
@@ -136,13 +135,18 @@ class DisplayController {
                         <div  class="dark-gray montserrat priority">${this.genPriorityIcon(taskPriority)}</div>
                         <div id="taskTime" class="dark-gray montserrat">${taskTime}</div>
                     </div>
-                    <button data-task-index="${taskIndex}" class="btn-floating green hover-button complete-task">
-                        <span class="material-symbols-sharp">
+                    <button data-task-index="${taskIndex}" class="btn-floating green hover-button complete">
+                        <span class="material-symbols-sharp blue-icon">
                                 ${isTaskComplete() ? "undo" : "check"}
                             </span>
                     </button>
-                    <button data-task-index="${taskIndex}" class="btn-floating red hover-button delete-task">
-                        <span class="material-symbols-sharp">
+                    <button data-task-index="${taskIndex}" class="btn-floating green hover-button edit">
+                        <span class="material-symbols-sharp blue-icon">
+                               edit
+                            </span>
+                    </button>
+                    <button data-task-index="${taskIndex}" class="btn-floating red hover-button delete ">
+                        <span class="material-symbols-sharp blue-icon">
                                delete
                             </span>
                     </button>
@@ -235,15 +239,15 @@ class DisplayController {
         let color;
         switch (priority) {
             case taskConst.PRIORITY.LOW:
-                icon = "signal_cellular_alt_1_bar";
+                icon = "signal_cellular_1_bar";
                 color = "light-blue";
                 break;
             case taskConst.PRIORITY.MEDIUM:
-                icon = "signal_cellular_alt_2_bar";
+                icon = "signal_cellular_3_bar";
                 color = "blue";
                 break;
             case taskConst.PRIORITY.HIGH:
-                icon = "signal_cellular_alt";
+                icon = "signal_cellular_4_bar";
                 color = "orange";
                 break;
             case taskConst.PRIORITY.EXTREME:

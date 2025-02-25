@@ -16,6 +16,8 @@ class EventController {
         this.iconDialog = document.querySelector("#iconDialog");
         this.addTaskDialog = document.querySelector("#addTaskDialog");
         this.addTaskForm = document.querySelector("#addTaskForm");
+        this.editTaskDialog = document.querySelector("#editTaskDialog");
+        this.editTaskForm = document.querySelector("#editTaskForm");
         this.addTodoDialog = document.querySelector("#addTodoDialog");
         this.addTodoForm = document.querySelector("#addTodoForm");
 
@@ -39,11 +41,14 @@ class EventController {
     initializeEventListeners() {
         this.setSidebarTodos();
         this.setToggleTaskStatus();
+        this.setDeleteTask();
+        this.setEditTask();
 
         this.setCompletedTasks();
 
         this.setAddTaskDialog();
         this.setAddTodoDialog();
+        this.setEditTaskDialog();
         this.setIconListToggle();
 
         this.iconDialog.addEventListener("click", (e) => this.selectIcon(e));
@@ -52,20 +57,22 @@ class EventController {
     }
 
     setAddTaskDialog() {
-        document
-            .querySelector("#addTaskDialog .dialog-header>button")
-            .addEventListener("click", () => {
-                this.addTaskDialog.close();
-            });
-        document
-            .querySelector("#closeAddTaskDialog")
-            .addEventListener("click", () => this.addTaskDialog.close());
+        let backButton = document.querySelector(
+            "#addTaskDialog .dialog-header>button",
+        );
+        let cancelButton = document.querySelector("#closeAddTaskDialog");
+        let addButton = document.querySelector("#showAddTaskDialog");
 
-        document
-            .querySelector("#showAddTaskDialog")
-            .addEventListener("click", () => {
-                this.addTaskDialog.showModal();
-            });
+        backButton.addEventListener("click", () => {
+            this.addTaskDialog.close();
+        });
+        cancelButton.addEventListener("click", () =>
+            this.addTaskDialog.close(),
+        );
+
+        addButton.addEventListener("click", () => {
+            this.addTaskDialog.showModal();
+        });
 
         this.addTaskForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -77,11 +84,50 @@ class EventController {
 
             this.displayController.renderTodo(); //render
             this.setToggleTaskStatus(); //re-attach event listeners
+            this.setDeleteTask();
+            this.setEditTask();
 
             this.addTaskForm.reset();
             this.addTaskDialog.close();
         });
     }
+
+    setEditTaskDialog() {
+        let backButton = document.querySelector(
+            "#editTaskDialog .dialog-header>button",
+        );
+        let cancelButton = document.querySelector("#closeEditTaskDialog");
+
+        backButton.addEventListener("click", () => {
+            this.editTaskDialog.close();
+        });
+
+        cancelButton.addEventListener("click", () =>
+            this.editTaskDialog.close(),
+        );
+
+        this.editTaskForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            let formData = this.sendEditTaskForm();
+
+            let taskIndex = this.editTaskForm.dataset.taskIndex; //task being edited index
+            let currentTodo = this.todoController.currentTodo;
+            let newTask = this.createFromForm(formData, "edit"); //task with new info
+
+            currentTodo.editTask(taskIndex, newTask);
+
+            this.displayController.renderTodo(); //render
+
+            this.setToggleTaskStatus(); //re-attach event listeners
+            this.setEditTask();
+            this.setDeleteTask();
+
+            this.editTaskForm.reset();
+            this.editTaskDialog.close();
+        });
+    }
+
     setAddTodoDialog() {
         document
             .querySelector("#addTodoDialog .dialog-header>button")
@@ -101,8 +147,8 @@ class EventController {
         this.addTodoForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
-            const formData = this.sendTodoForm();
-            const newTodo = this.createFromForm(formData, "todo");
+            let formData = this.sendTodoForm();
+            let newTodo = this.createFromForm(formData, "todo");
             let todoList = this._todoController.todos;
             if (todoList.length >= 10) {
                 alert("Max of 10 Todos can be added.");
@@ -121,22 +167,63 @@ class EventController {
     }
 
     setToggleTaskStatus() {
-        const completeButtons = document.querySelectorAll(
-            "button.complete-task",
-        );
+        const completeButtons = document.querySelectorAll("button.complete");
 
         completeButtons.forEach((button) => {
+            const newBtn = clearEventListeners(button);
+            newBtn.addEventListener("click", () => {
+                let currentTodo = this.todoController.currentTodo;
+
+                const taskIndex = button.dataset.taskIndex;
+                let currentTask = currentTodo.tasks[taskIndex];
+
+                currentTask.toggleStatus();
+
+                this.displayController.renderTodo(); //render
+                this.setToggleTaskStatus();
+                this.setEditTask();
+                this.setDeleteTask(); //reattach eventListeners //FIXME
+            });
+        });
+    }
+
+    setDeleteTask() {
+        const deleteButtons = document.querySelectorAll("button.delete");
+
+        deleteButtons.forEach((button) => {
             const newBtn = clearEventListeners(button);
             newBtn.addEventListener("click", () => {
                 const currentTodo = this.todoController.currentTodo;
 
                 const taskIndex = button.dataset.taskIndex;
-                const currentTask = currentTodo.tasks[taskIndex];
 
-                currentTask.toggleStatus();
+                currentTodo.deleteTask(taskIndex);
 
                 this.displayController.renderTodo(); //render
-                this.setToggleTaskStatus(); //reattach eventListeners
+                this.setToggleTaskStatus();
+                this.setEditTask();
+                this.setDeleteTask(); //reattach eventListeners //FIXME
+            });
+        });
+    }
+
+    setEditTask() {
+        const editButtons = document.querySelectorAll("button.edit");
+
+        editButtons.forEach((button) => {
+            const newBtn = clearEventListeners(button);
+            newBtn.addEventListener("click", () => {
+                let taskIndex = newBtn.dataset.taskIndex;
+                let task = this.todoController.currentTodo.tasks[taskIndex];
+
+                this.editTaskForm.dataset.taskIndex = taskIndex;
+                this.editTaskDialog.showModal();
+
+                this.fillEditForm(task);
+
+                this.setToggleTaskStatus();
+                this.setEditTask();
+                this.setDeleteTask();
             });
         });
     }
@@ -168,6 +255,8 @@ class EventController {
             icon = document.querySelector("#showTaskIconList");
         } else if (this.addTodoDialog.open) {
             icon = document.querySelector("#showTodoIconList");
+        } else if (this.editTaskDialog.open) {
+            icon = document.querySelector("#showEditTaskIconList");
         }
 
         return icon;
@@ -175,6 +264,12 @@ class EventController {
 
     sendTaskForm() {
         const formData = new FormData(this.addTaskForm);
+
+        return formData;
+    }
+
+    sendEditTaskForm() {
+        const formData = new FormData(this.editTaskForm);
 
         return formData;
     }
@@ -199,14 +294,18 @@ class EventController {
         } else if (type === "todo") {
             icon = document.querySelector("#showTodoIconList").textContent;
             element = new Todo();
+        } else if (type === "edit") {
+            element = new Task();
+            icon = document.querySelector("#showEditTaskIconList").textContent;
         }
-
+        icon.trim().replace(/\s+/g, "");
         formData.append("icon", icon);
 
         for (let [key, value] of formData.entries()) {
-            element[key] = value;
+            if (key) {
+                element[key] = value;
+            }
         }
-
         return element;
     }
 
@@ -217,6 +316,10 @@ class EventController {
 
         document
             .querySelector("#showTodoIconList")
+            .addEventListener("click", () => this.toggleIconList());
+
+        document
+            .querySelector("#showEditTaskIconList")
             .addEventListener("click", () => this.toggleIconList());
     }
 
@@ -314,6 +417,22 @@ class EventController {
         sidebar.classList.toggle("is-closed");
         hambButton.classList.toggle("active");
         svg.classList.toggle("black");
+    }
+
+    fillEditForm(task) {
+        this.editTaskForm
+            .querySelectorAll("input, textarea, select")
+            .forEach((input) => {
+                const fieldName = input.id;
+                if (task[fieldName] !== undefined) {
+                    // Handling for select elements like status and priority
+                    if (input.tagName === "SELECT" && task[fieldName]) {
+                        input.value = task[fieldName]; // Set the value of select elements
+                    } else {
+                        input.value = task[fieldName]; // Handle other input types (text, textarea, etc.)
+                    }
+                }
+            });
     }
 }
 

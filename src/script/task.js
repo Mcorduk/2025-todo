@@ -52,7 +52,6 @@ class Task {
     set status(newStatus) {
         const STATUSES = Object.values(taskConst.STATUS);
         if (!STATUSES.includes(newStatus)) {
-            console.log("Please pick an appropriate status.");
             return;
         }
 
@@ -62,7 +61,6 @@ class Task {
     set priority(newPriority) {
         const TASK_PRIORITIES = Object.values(taskConst.PRIORITY);
         if (!TASK_PRIORITIES.includes(newPriority)) {
-            console.log("Please pick an appropriate priority.");
             return;
         }
 

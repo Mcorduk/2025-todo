@@ -78,6 +78,10 @@ hr {
         "opsz" 48;
 }
 
+.green-icon {
+    color: green;
+}
+
 .blue-icon {
     color: blue;
 }
