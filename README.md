@@ -27,6 +27,7 @@ Step by Step implementation
 - Can make a todo for past dates and times?
 - Load the last seen todo when visiting site again
 - If No Todo, a greyed out icon to indicate emptiness
+- If No Todo, delete icon invisible
 - Dark Mode
 - Task Text Overflow, Tasks Header and Desc should end with "..."
 - Todo Text Overflow, Todo headers should have a max limit AND text size should be dynamically smaller

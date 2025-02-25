@@ -236,23 +236,24 @@ class DisplayController {
 
     genPriorityIcon(priority) {
         let icon;
-        let color;
+        let color = "light-blue";
+
         switch (priority) {
             case taskConst.PRIORITY.LOW:
                 icon = "signal_cellular_1_bar";
-                color = "light-blue";
+                // color = "light-blue";
                 break;
             case taskConst.PRIORITY.MEDIUM:
                 icon = "signal_cellular_3_bar";
-                color = "blue";
+                // color = "blue";
                 break;
             case taskConst.PRIORITY.HIGH:
                 icon = "signal_cellular_4_bar";
-                color = "orange";
+                // color = "orange";
                 break;
             case taskConst.PRIORITY.EXTREME:
                 icon = "signal_cellular_connected_no_internet_4_bar";
-                color = "red";
+                // color = "red";
                 break;
             default:
                 throw new Error("Priority icon not found");

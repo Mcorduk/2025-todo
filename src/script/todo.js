@@ -19,20 +19,12 @@ class Todo {
         if (index > -1 && index < this.tasks.length) {
             let task = this.tasks[index];
 
-            // Update the task's properties with newTask's properties
-
             task.icon = newTask.icon;
-
             task.name = newTask.name;
-
             task.description = newTask.description;
-
             task.time = newTask.time;
-
             task.date = newTask.date;
-
             task.status = newTask.status;
-
             task.priority = newTask.priority;
         } else {
             throw new Error("Invalid task index");

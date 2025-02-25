@@ -7,7 +7,6 @@ function generateExampleTodos() {
     let exampleTodos = [];
 
     if (!todos) {
-        console.log("No example todo's were found.");
         return [];
     }
 
