@@ -24,6 +24,7 @@ class DisplayController {
         this.renderBody();
         this.renderFooter();
         LocalStorage.saveTodos(this.todoController.todos);
+        LocalStorage.saveLastTodo(this.todoController.currentTodoIndex);
     }
 
     renderNav() {

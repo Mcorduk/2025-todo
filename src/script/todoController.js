@@ -17,7 +17,7 @@ class TodoController {
 
     initialize() {
         // checkLocalStorage for todos
-        this.currentTodoIndex = 0;
+        this.currentTodoIndex = LocalStorage.loadLastTodo();
 
         if (LocalStorage.hasTodosInLocalStorage()) {
             this._todos = LocalStorage.loadTodos();

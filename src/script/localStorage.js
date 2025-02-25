@@ -48,11 +48,11 @@ class LocalStorage {
         });
     }
 
-    saveLastTodo(index) {
+    static saveLastTodo(index) {
         localStorage.setItem("currentTodoIndex", index);
     }
 
-    loadLastTodo() {
+    static loadLastTodo() {
         let storedIndex = localStorage.getItem("currentTodoIndex");
         if (!storedIndex) {
             storedIndex = 0;
