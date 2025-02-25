@@ -31,6 +31,7 @@
                     </svg>
                 </button>
             </div>
+
             <nav></nav>
 
             <section class="flex-1">
@@ -73,6 +74,9 @@
                 <footer>
                     <button class="button-67" id="showAddTodoDialog">
                         <span class="material-symbols-sharp"> add </span>
+                    </button>
+                    <button class="button-67" id="showDeleteTodoDialog">
+                        <span class="material-symbols-sharp"> delete </span>
                     </button>
                 </footer>
             </aside>
@@ -337,6 +341,41 @@
                                 class="save-btn"
                             >
                                 Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+        <dialog id="deleteTodoDialog">
+            <div class="dialog">
+                <div class="dialog-header">
+                    <button type="reset">
+                        <span class="material-symbols-sharp"> west </span>
+                    </button>
+                    <h2 class="montserrat">Remove Todo</h2>
+                    <div></div>
+                </div>
+                <div class="dialog-body open-sans">
+                    <form id="deleteTodoForm">
+                        <div class="form-group">
+                            <label for="todo">Todo</label>
+                            <select id="todo" name="todo"></select>
+                        </div>
+                        <div class="dialog-footer open-sans">
+                            <button
+                                id="closeDeleteTodoDialog"
+                                type="reset"
+                                class="cancel-btn"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                id="sendDeleteTodoForm"
+                                class="save-btn"
+                            >
+                                Confirm
                             </button>
                         </div>
                     </form>

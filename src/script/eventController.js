@@ -20,7 +20,8 @@ class EventController {
         this.editTaskForm = document.querySelector("#editTaskForm");
         this.addTodoDialog = document.querySelector("#addTodoDialog");
         this.addTodoForm = document.querySelector("#addTodoForm");
-
+        this.deleteTodoDialog = document.querySelector("#deleteTodoDialog");
+        this.deleteTodoForm = document.querySelector("#deleteTodoForm");
         EventController.#instance = this;
 
         this.initializeEventListeners();
@@ -48,6 +49,7 @@ class EventController {
 
         this.setAddTaskDialog();
         this.setAddTodoDialog();
+        this.setDeleteTodoDialog();
         this.setEditTaskDialog();
         this.setIconListToggle();
 
@@ -129,20 +131,22 @@ class EventController {
     }
 
     setAddTodoDialog() {
-        document
-            .querySelector("#addTodoDialog .dialog-header>button")
-            .addEventListener("click", () => {
-                this.addTodoDialog.close();
-            });
+        let backButton = document.querySelector(
+            "#addTodoDialog .dialog-header>button",
+        );
+        let cancelButton = document.querySelector("#closeAddTodoDialog");
+        let addButton = document.querySelector("#showAddTodoDialog");
 
-        document
-            .querySelector("#closeAddTodoDialog")
-            .addEventListener("click", () => this.addTodoDialog.close());
-        document
-            .querySelector("#showAddTodoDialog")
-            .addEventListener("click", () => {
-                this.addTodoDialog.showModal();
-            });
+        backButton.addEventListener("click", () => {
+            this.addTodoDialog.close();
+        });
+
+        cancelButton.addEventListener("click", () =>
+            this.addTodoDialog.close(),
+        );
+        addButton.addEventListener("click", () => {
+            this.addTodoDialog.showModal();
+        });
 
         this.addTodoForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -159,10 +163,52 @@ class EventController {
             todoList.push(newTodo);
 
             this.displayController.renderSidebar();
-            this.displayController.setRenderSidebarTodos();
+            this.setSidebarTodos();
 
             this.addTodoForm.reset();
             this.addTodoDialog.close();
+        });
+    }
+
+    setDeleteTodoDialog() {
+        let backButton = document.querySelector(
+            "#deleteTodoDialog .dialog-header>button",
+        );
+        let cancelButton = document.querySelector("#closeDeleteTodoDialog");
+        let deleteButton = document.querySelector("#showDeleteTodoDialog");
+
+        backButton.addEventListener("click", () => {
+            this.deleteTodoDialog.close();
+        });
+
+        cancelButton.addEventListener("click", () =>
+            this.deleteTodoDialog.close(),
+        );
+        deleteButton.addEventListener("click", () => {
+            this.populateTodoSelect();
+            this.deleteTodoDialog.showModal();
+        });
+
+        this.deleteTodoForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            let formData = this.sendDeleteTodoForm();
+            let todoList = this._todoController.todos;
+            if (todoList.length === 0) {
+                alert("No todos are available for deleting.");
+                this.deleteTodoForm.reset();
+                this.deleteTodoDialog.close();
+                return;
+            }
+            let index = formData.get("todo");
+
+            this.todoController.deleteTodo(index);
+
+            this.displayController.renderSidebar();
+            this.setSidebarTodos();
+
+            this.deleteTodoForm.reset();
+            this.deleteTodoDialog.close();
         });
     }
 
@@ -276,6 +322,12 @@ class EventController {
 
     sendTodoForm() {
         const formData = new FormData(this.addTodoForm);
+
+        return formData;
+    }
+
+    sendDeleteTodoForm() {
+        const formData = new FormData(this.deleteTodoForm);
 
         return formData;
     }
@@ -433,6 +485,25 @@ class EventController {
                     }
                 }
             });
+    }
+
+    populateTodoSelect() {
+        const selectElement = document.querySelector("#todo");
+        const todos = this.todoController.todos;
+
+        selectElement.innerHTML = "";
+
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = "Select a Todo";
+        selectElement.appendChild(defaultOption);
+
+        todos.forEach((todo, index) => {
+            const option = document.createElement("option");
+            option.value = index;
+            option.textContent = todo.name;
+            selectElement.appendChild(option);
+        });
     }
 }
 
