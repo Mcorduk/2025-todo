@@ -10,7 +10,7 @@ class TodoController {
 
         this._todos = []; // local storage check
         this._currentTodo;
-        this._currentTodoIndex;
+        this._currentTodoIndex = 0;
 
         TodoController.#instance = this;
     }
@@ -24,6 +24,8 @@ class TodoController {
         } else {
             this._todos = generateExampleTodos();
         }
+
+        LocalStorage.loadLastTodo();
     }
 
     get todos() {
@@ -54,8 +56,18 @@ class TodoController {
     }
 
     deleteTodo(index) {
+        if (this.todos.length === 1) {
+            alert("There should be at least 1 todo!");
+            return;
+        }
         if (index > -1 && index < this.todos.length) {
             this.todos.splice(index, 1);
+        }
+
+        if (index === "0") {
+            this.currentTodoIndex = 1;
+        } else {
+            this.currentTodoIndex = index - 1;
         }
     }
 }

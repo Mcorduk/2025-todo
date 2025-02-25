@@ -204,6 +204,7 @@ class EventController {
 
             this.todoController.deleteTodo(index);
 
+            this.displayController.renderTodo();
             this.displayController.renderSidebar();
             this.setSidebarTodos();
 
