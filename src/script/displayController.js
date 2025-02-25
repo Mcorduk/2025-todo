@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { MATERIAL_ICONS, taskConst } from "./constants";
 import { capitalizeFirstLetter } from "./helper";
+import { LocalStorage } from "./localStorage";
 class DisplayController {
     static #instance = null;
 
@@ -22,6 +23,7 @@ class DisplayController {
         this.renderNav();
         this.renderBody();
         this.renderFooter();
+        LocalStorage.saveTodos(this.todoController.todos);
     }
 
     renderNav() {
@@ -193,6 +195,7 @@ class DisplayController {
     renderSidebar() {
         this.renderSidebarNav();
         this.renderSidebarTodos();
+        LocalStorage.saveTodos(this.todoController.todos);
     }
 
     generateTodo(index, todo) {

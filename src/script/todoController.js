@@ -1,5 +1,5 @@
 import { generateExampleTodos } from "./helper";
-
+import { LocalStorage } from "./localStorage";
 class TodoController {
     static #instance = null;
 
@@ -17,11 +17,12 @@ class TodoController {
 
     initialize() {
         // checkLocalStorage for todos
-        let localStorage = false;
+        this.currentTodoIndex = 0;
 
-        if (!localStorage) {
+        if (LocalStorage.hasTodosInLocalStorage()) {
+            this._todos = LocalStorage.loadTodos();
+        } else {
             this._todos = generateExampleTodos();
-            this.currentTodoIndex = 0;
         }
     }
 
