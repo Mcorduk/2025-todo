@@ -53,8 +53,8 @@ class TodoController {
     }
 
     deleteTodo(index) {
-        if (index > -1 && index < this._tasks.length) {
-            this._todos.splice(index, 1);
+        if (index > -1 && index < this.todos.length) {
+            this.todos.splice(index, 1);
         }
     }
 }
